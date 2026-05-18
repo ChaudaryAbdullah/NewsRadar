@@ -256,7 +256,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               const SizedBox(width: 4),
               Text('${r.trace.totalDurationMs}ms total', style: GoogleFonts.inter(fontSize: 12, color: AppColors.textMuted)),
               const SizedBox(width: 12),
-              Text(r.trace.traceId, style: GoogleFonts.inter(fontSize: 10, color: AppColors.textMuted, fontFamily: 'monospace')),
+              Text(r.trace.traceId, style: GoogleFonts.inter(fontSize: 10, color: AppColors.textMuted).copyWith(fontFamily: 'monospace')),
             ]),
             const SizedBox(height: 10),
             ...r.trace.steps.map((s) => Padding(
