@@ -1,5 +1,4 @@
 services:
-  # ── Backend (FastAPI) ──────────────────────────────────────────────────────
   - type: web
     name: newsradar-backend
     runtime: python
@@ -9,9 +8,13 @@ services:
     pythonVersion: "3.11.9"
     envVars:
       - key: GROQ_API_KEY
-        sync: false          # Set this in Render dashboard → Environment
+        sync: false
+      - key: NEWSAPI_KEY
+        sync: false
       - key: DEBUG
         value: "false"
+      - key: HOST
+        value: "0.0.0.0"
       - key: ALLOWED_ORIGINS
         value: "*"
     plan: free

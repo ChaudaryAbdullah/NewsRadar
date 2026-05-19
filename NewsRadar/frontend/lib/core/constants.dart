@@ -1,8 +1,9 @@
 class AppConstants {
   // ── Backend URL ─────────────────────────────────────────────────────────────
-  // static const String baseUrl = 'http://localhost:8000';       // Windows desktop only
-  // static const String baseUrl = 'http://10.0.2.2:8000';       // Android emulator only
-  static const String baseUrl = 'http://172.15.75.109:8000';     // ← Physical phone (same WiFi)
+  // static const String baseUrl = 'http://localhost:8000';         // Windows desktop only
+  // static const String baseUrl = 'http://10.0.2.2:8000';         // Android emulator only
+  // static const String baseUrl = 'http://172.15.75.109:8000';    // Physical phone (same WiFi)
+  static const String baseUrl = 'https://newsradar-ftkd.onrender.com'; // ✅ Cloud (works everywhere)
 
   static const String apiV1 = '$baseUrl/api/v1';
 
