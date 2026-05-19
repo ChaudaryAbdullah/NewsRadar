@@ -7,7 +7,7 @@ import '../../../shared/services/api_service.dart';
 import '../../../shared/widgets/badges.dart';
 import '../../../core/theme.dart';
 import '../../analysis/screens/analysis_screen.dart';
-import '../../auth/screens/login_screen.dart';
+import '../../auth/screens/auth_screen.dart';
 import '../widgets/article_card.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -158,14 +158,10 @@ class _FeedScreenState extends State<FeedScreen>
               onSelected: (v) {
                 if (v == 'logout') {
                   AuthService().logout();
-                  Navigator.pushReplacement(
+                  Navigator.pushAndRemoveUntil(
                     context,
-                    PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => const LoginScreen(),
-                      transitionsBuilder: (_, anim, __, child) =>
-                          FadeTransition(opacity: anim, child: child),
-                      transitionDuration: const Duration(milliseconds: 300),
-                    ),
+                    MaterialPageRoute(builder: (_) => const AuthScreen()),
+                    (_) => false,
                   );
                 }
               },
@@ -266,6 +262,57 @@ class _FeedScreenState extends State<FeedScreen>
       padding: const EdgeInsets.only(bottom: 20),
       itemCount: _articles.length,
       itemBuilder: (_, i) => ArticleCard(article: _articles[i], index: i, onTap: () => _openArticle(_articles[i])),
+    );
+  }
+}
+
+// ─── Reusable feed body (embedded in other dashboards) ────────────────────────
+
+class FeedBodyContent extends StatefulWidget {
+  const FeedBodyContent({super.key});
+  @override
+  State<FeedBodyContent> createState() => _FeedBodyContentState();
+}
+
+class _FeedBodyContentState extends State<FeedBodyContent> {
+  final _api = ApiService();
+  List<Article> _articles = [];
+  bool _loading = true;
+  String? _error;
+
+  @override
+  void initState() { super.initState(); _load(); }
+
+  Future<void> _load() async {
+    setState(() { _loading = true; _error = null; });
+    try {
+      final articles = await _api.getArticles();
+      setState(() { _articles = articles; _loading = false; });
+    } catch (e) {
+      setState(() { _error = e.toString(); _loading = false; });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_loading) return ListView.builder(itemCount: 5, itemBuilder: (_, __) => const LoadingShimmerCard());
+    if (_error != null) return Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+      const Icon(Icons.wifi_off_rounded, color: AppColors.textMuted, size: 48),
+      const SizedBox(height: 12),
+      Text('Backend not reachable', style: GoogleFonts.inter(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+      const SizedBox(height: 8),
+      ElevatedButton.icon(onPressed: _load, icon: const Icon(Icons.refresh_rounded), label: const Text('Retry')),
+    ]));
+    if (_articles.isEmpty) return Center(child: Text('No articles found', style: GoogleFonts.inter(fontSize: 15, color: AppColors.textMuted)));
+    return RefreshIndicator(
+      onRefresh: _load, color: AppColors.accent,
+      child: ListView.builder(
+        padding: const EdgeInsets.only(bottom: 20),
+        itemCount: _articles.length,
+        itemBuilder: (_, i) => ArticleCard(
+          article: _articles[i], index: i,
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AnalysisScreen(article: _articles[i])))),
+      ),
     );
   }
 }
