@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_41bc82ed85de",
+  "article_id": "92cee0aa9f5ea0db",
+  "article_title": "Drone strikes UAE nuclear plant as US and Iran signal they are prepared to resume war - The Seattle Times",
+  "timestamp": "2026-05-19T06:45:34.951501+00:00",
+  "total_duration_ms": 7483,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: The Seattle Times"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 3944,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Groq extraction failed (Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}). Using fallback."
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 1863,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Evaluation failed (Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}). Defaults applied."
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 1674,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Action generation failed (Error code: 400 - {'error': {'message': 'The model `llama3-70b-8192` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.', 'type': 'invalid_request_error', 'code': 'model_decommissioned'}}). Fallback applied."
+    }
+  ]
+}

@@ -7,7 +7,7 @@ load_dotenv()
 class Settings:
     # API Keys
     NEWSAPI_KEY: str = os.getenv("NEWSAPI_KEY", "")
-    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
 
     # Server
     PORT: int = int(os.getenv("PORT", "8000"))
@@ -21,10 +21,10 @@ class Settings:
     NEWS_API_BASE: str = "https://newsapi.org/v2"
     NEWS_PAGE_SIZE: int = 20
 
-    # Gemini
-    GEMINI_MODEL: str = "gemini-2.0-flash"
-    GEMINI_TEMPERATURE: float = 0.3
-    GEMINI_MAX_TOKENS: int = 2048
+    # Groq
+    GROQ_MODEL: str = "llama-3.1-8b-instant"
+    GROQ_TEMPERATURE: float = 0.3
+    GROQ_MAX_TOKENS: int = 2048
 
     # Source reliability known scores (used in evaluation)
     KNOWN_RELIABLE_SOURCES: dict = {

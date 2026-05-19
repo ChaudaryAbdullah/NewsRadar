@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_39c709fbfe12",
+  "article_id": "92cee0aa9f5ea0db",
+  "article_title": "Drone strikes UAE nuclear plant as US and Iran signal they are prepared to resume war - The Seattle Times",
+  "timestamp": "2026-05-19T06:33:15.809861+00:00",
+  "total_duration_ms": 8043,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: The Seattle Times"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 2671,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Gemini extraction failed (404 models/gemini-3.0-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.). Using fallback."
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 1817,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Evaluation failed (404 models/gemini-3.0-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.). Defaults applied."
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 3554,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Action generation failed (404 models/gemini-3.0-flash is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.). Fallback applied."
+    }
+  ]
+}

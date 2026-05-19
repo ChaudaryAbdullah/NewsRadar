@@ -22,7 +22,7 @@ from ai.prompts import (
     IMPLICATION_EVALUATION_PROMPT,
     ACTION_GENERATION_PROMPT,
 )
-from services.gemini_service import generate_json
+from services.groq_service import generate_json
 from services.news_service import fetch_article_body
 from core.config import settings
 from models.schemas import (
@@ -144,7 +144,7 @@ async def _step_extract(article: Article, body: str) -> tuple[InsightResult, Tra
             step="EXTRACT_INSIGHTS",
             duration_ms=_ms(t),
             status="DEGRADED",
-            output_summary=f"Gemini extraction failed ({e}). Using fallback.",
+            output_summary=f"Groq extraction failed ({e}). Using fallback.",
         )
     return insight, step
 

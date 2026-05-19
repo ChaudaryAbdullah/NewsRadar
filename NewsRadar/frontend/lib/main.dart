@@ -8,7 +8,7 @@ void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.dark,
   ));
   runApp(const NewsRadarApp());
 }
@@ -21,7 +21,7 @@ class NewsRadarApp extends StatelessWidget {
     return MaterialApp(
       title: 'NewsRadar',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
+      theme: AppTheme.light,
       home: const FeedScreen(),
     );
   }

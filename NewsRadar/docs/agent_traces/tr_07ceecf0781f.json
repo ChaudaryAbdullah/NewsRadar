@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_07ceecf0781f",
+  "article_id": "92cee0aa9f5ea0db",
+  "article_title": "Drone strikes UAE nuclear plant as US and Iran signal they are prepared to resume war - The Seattle Times",
+  "timestamp": "2026-05-19T05:49:02.469405+00:00",
+  "total_duration_ms": 3803,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: The Seattle Times"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 1113,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Gemini extraction failed (403 Gemini API has not been used in project 1019481141104 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. [reason: \"SERVICE_DISABLED\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"serviceTitle\"\n  value: \"Gemini API\"\n}\nmetadata {\n  key: \"containerInfo\"\n  value: \"1019481141104\"\n}\nmetadata {\n  key: \"consumer\"\n  value: \"projects/1019481141104\"\n}\nmetadata {\n  key: \"activationUrl\"\n  value: \"https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104\"\n}\n, locale: \"en-US\"\nmessage: \"Gemini API has not been used in project 1019481141104 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n, links {\n  description: \"Google developers console API activation\"\n  url: \"https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104\"\n}\n]). Using fallback."
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 1415,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Evaluation failed (403 Gemini API has not been used in project 1019481141104 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. [reason: \"SERVICE_DISABLED\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"serviceTitle\"\n  value: \"Gemini API\"\n}\nmetadata {\n  key: \"containerInfo\"\n  value: \"1019481141104\"\n}\nmetadata {\n  key: \"consumer\"\n  value: \"projects/1019481141104\"\n}\nmetadata {\n  key: \"activationUrl\"\n  value: \"https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104\"\n}\n, locale: \"en-US\"\nmessage: \"Gemini API has not been used in project 1019481141104 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n, links {\n  description: \"Google developers console API activation\"\n  url: \"https://console.developers.google.com/apis/api/generativelanguage.googleapis.com/overview?project=1019481141104\"\n}\n]). Defaults applied."
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 1272,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Action generation failed (403 Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked. [reason: \"API_KEY_SERVICE_BLOCKED\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"methodName\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\nmetadata {\n  key: \"consumer\"\n  value: \"projects/1019481141104\"\n}\nmetadata {\n  key: \"apiName\"\n  value: \"generativelanguage.googleapis.com\"\n}\n, locale: \"en-US\"\nmessage: \"Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked.\"\n]). Fallback applied."
+    }
+  ]
+}

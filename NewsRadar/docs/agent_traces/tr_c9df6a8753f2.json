@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_c9df6a8753f2",
+  "article_id": "92cee0aa9f5ea0db",
+  "article_title": "Drone strikes UAE nuclear plant as US and Iran signal they are prepared to resume war - The Seattle Times",
+  "timestamp": "2026-05-19T05:50:31.004050+00:00",
+  "total_duration_ms": 2974,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: The Seattle Times"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 1198,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Gemini extraction failed (403 Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked. [reason: \"API_KEY_SERVICE_BLOCKED\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"methodName\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\nmetadata {\n  key: \"consumer\"\n  value: \"projects/1019481141104\"\n}\nmetadata {\n  key: \"apiName\"\n  value: \"generativelanguage.googleapis.com\"\n}\n, locale: \"en-US\"\nmessage: \"Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked.\"\n]). Using fallback."
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 694,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Evaluation failed (403 Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked. [reason: \"API_KEY_SERVICE_BLOCKED\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"methodName\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\nmetadata {\n  key: \"consumer\"\n  value: \"projects/1019481141104\"\n}\nmetadata {\n  key: \"apiName\"\n  value: \"generativelanguage.googleapis.com\"\n}\n, locale: \"en-US\"\nmessage: \"Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked.\"\n]). Defaults applied."
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 1080,
+      "tokens_used": null,
+      "status": "DEGRADED",
+      "output_summary": "Action generation failed (403 Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked. [reason: \"API_KEY_SERVICE_BLOCKED\"\ndomain: \"googleapis.com\"\nmetadata {\n  key: \"service\"\n  value: \"generativelanguage.googleapis.com\"\n}\nmetadata {\n  key: \"methodName\"\n  value: \"google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent\"\n}\nmetadata {\n  key: \"consumer\"\n  value: \"projects/1019481141104\"\n}\nmetadata {\n  key: \"apiName\"\n  value: \"generativelanguage.googleapis.com\"\n}\n, locale: \"en-US\"\nmessage: \"Requests to this API generativelanguage.googleapis.com method google.ai.generativelanguage.v1beta.GenerativeService.GenerateContent are blocked.\"\n]). Fallback applied."
+    }
+  ]
+}

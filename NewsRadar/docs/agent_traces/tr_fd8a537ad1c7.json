@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_fd8a537ad1c7",
+  "article_id": "1d99d27de690518a",
+  "article_title": "Global stocks retreat and bonds wilt as oil climbs - Yahoo Finance",
+  "timestamp": "2026-05-19T09:19:12.951944+00:00",
+  "total_duration_ms": 3691,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: Yahoo Entertainment"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 1136,
+      "tokens_used": 657,
+      "status": "SUCCESS",
+      "output_summary": "Extracted 3 claims, 4 entities, sentiment=NEGATIVE"
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 1057,
+      "tokens_used": 501,
+      "status": "SUCCESS",
+      "output_summary": "Risk=MEDIUM, Misinfo prob=0%, Source reliability=55%"
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 1496,
+      "tokens_used": 730,
+      "status": "SUCCESS",
+      "output_summary": "Generated 3 recommended actions"
+    }
+  ]
+}

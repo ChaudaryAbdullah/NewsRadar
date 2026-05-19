@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_5e5d848d0b92",
+  "article_id": "d8f2be4c452e2be7",
+  "article_title": "Americans may have been exposed in Congo Ebola outbreak - The Washington Post",
+  "timestamp": "2026-05-19T09:47:38.798903+00:00",
+  "total_duration_ms": 18981,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (213 chars). Source: The Washington Post"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 2120,
+      "tokens_used": 661,
+      "status": "SUCCESS",
+      "output_summary": "Extracted 3 claims, 4 entities, sentiment=NEUTRAL"
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 949,
+      "tokens_used": 496,
+      "status": "SUCCESS",
+      "output_summary": "Risk=LOW, Misinfo prob=0%, Source reliability=85%"
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 15911,
+      "tokens_used": 720,
+      "status": "SUCCESS",
+      "output_summary": "Generated 3 recommended actions"
+    }
+  ]
+}

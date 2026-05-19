@@ -1,0 +1,352 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NewsRadar - Explore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fcf9f8;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .category-card:hover .category-bg {
+            transform: scale(1.1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#004e9f",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e5e2e1",
+                        "outline": "#727784",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#002204",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "on-secondary-fixed-variant": "#8c1520",
+                        "primary-container": "#0066cc",
+                        "on-background": "#1b1c1c",
+                        "on-secondary-fixed": "#410006",
+                        "surface-container": "#f0eded",
+                        "on-error": "#ffffff",
+                        "primary-fixed": "#d7e3ff",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container-high": "#eae7e7",
+                        "outline-variant": "#c1c6d5",
+                        "on-primary-fixed": "#001b3e",
+                        "tertiary": "#005e17",
+                        "on-primary-container": "#dfe8ff",
+                        "tertiary-fixed": "#94f990",
+                        "surface": "#fcf9f8",
+                        "secondary-fixed": "#ffdad8",
+                        "on-tertiary-container": "#9aff96",
+                        "background": "#fcf9f8",
+                        "tertiary-container": "#047921",
+                        "on-primary-fixed-variant": "#00458e",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "surface-dim": "#dcd9d9",
+                        "secondary-fixed-dim": "#ffb3b0",
+                        "on-surface-variant": "#414753",
+                        "primary-fixed-dim": "#aac7ff",
+                        "surface-bright": "#fcf9f8",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#303030",
+                        "secondary-container": "#ff6b6b",
+                        "on-surface": "#1b1c1c",
+                        "inverse-primary": "#aac7ff",
+                        "on-error-container": "#93000a",
+                        "secondary": "#ae2f34",
+                        "surface-variant": "#e5e2e1",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#6d0010",
+                        "surface-tint": "#005cba",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "error-container": "#ffdad6"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "md": "16px",
+                        "xl": "40px",
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-xl-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "button": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm w-full sticky top-0 z-50">
+<div class="flex items-center justify-between px-md py-sm max-w-container-max mx-auto">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed" data-icon="radar">radar</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NewsRadar</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 duration-200" data-icon="notifications">notifications</button>
+<div class="hidden md:flex gap-md">
+<a class="text-on-surface-variant hover:text-primary font-button text-button transition-all" href="#">Home</a>
+<a class="text-primary font-bold font-button text-button transition-all" href="#">Explore</a>
+<a class="text-on-surface-variant hover:text-primary font-button text-button transition-all" href="#">Pipeline</a>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-md pb-32">
+<!-- Search Section -->
+<section class="mb-xl">
+<div class="relative max-w-2xl mx-auto">
+<div class="flex items-center bg-surface-container-low border border-outline-variant rounded-full px-lg py-sm shadow-sm focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<span class="material-symbols-outlined text-outline mr-md" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-body-md text-body-md text-on-surface placeholder-on-surface-variant" placeholder="Search topics, sources, or keywords..." type="text">
+<button class="material-symbols-outlined text-primary hover:bg-primary-container/10 p-2 rounded-full transition-colors" data-icon="mic">mic</button>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-xl">
+<!-- Left Column: Categories & Sources -->
+<div class="lg:col-span-8 space-y-xl">
+<!-- Category Bento Grid -->
+<section>
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Categories</h2>
+<button class="text-primary font-button text-button hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-md">
+<!-- Technology (Large) -->
+<div class="category-card relative overflow-hidden rounded-xl aspect-[16/10] md:col-span-2 group cursor-pointer bg-primary">
+<img class="category-bg absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700" data-alt="A clean, high-tech abstract visualization of a microprocessor or circuit board with glowing blue lines and data points. The lighting is cinematic and cool-toned, maintaining a professional corporate modernism aesthetic. The image is crisp, modern, and suggests advanced artificial intelligence and high-speed computing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbA5r9EDqXGYn2o-X-NV9iGoJtjdoBO0-vaHSpA_yagLzsjrwR2CqTTVJzwaTUZlFcazVqCxSfDVC1EPf1cuaxzAO7yTyrAczr1Ik_yn4Y34UpytEPAuqoAW25fw0_JCUfpRahNjmhVxs1fXpMwClsysYrMaf577XPPydhcMaHvOAMIt0VRSRERLK9ofTtPafytDxwKaCF88UhlDM_eD85mQHzDqtFMH51BLRbL5NnOEzx1RhPXII9tPiOG-83uXE6h-equsPcNFkj">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-lg">
+<span class="font-label-sm text-label-sm text-white/80 uppercase tracking-widest block mb-1">Trends in Tech</span>
+<h3 class="font-headline-md text-headline-md text-white">Technology</h3>
+</div>
+</div>
+<!-- Global Affairs -->
+<div class="category-card relative overflow-hidden rounded-xl aspect-square group cursor-pointer bg-tertiary">
+<img class="category-bg absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700" data-alt="A sophisticated macro shot of a glass globe reflecting a bright, modern office space. The color palette is composed of soft blues, greens, and whites. The lighting is diffused and professional, evoking a sense of calm intelligence and global connectivity. The style is clean and editorial." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhb4CsJnljp5wfgnZ6z4OQqHkGBT8-kU5zgkfvbb7Z4W8Ak8u8I8jQj-Iw8UWflYaOWV_bLNQMHDzi7CwGLlIWkqVIazr1xcbmIjTUjOmJuurrr_oqxLDmyvZkDNaK9iW33yLPwz6YhBwPu_a9PGLv3DnkJ4R7vV_T78h5AiTXuMGlCftS2Zmsg-uNGhY1qPwDUF4lMk-JBGyFs3-9GHQxnjDS3N8gcLpQC4MwKoQg3SvVVO1X_3VZqaIR48LD2g8ATbWHZNj1GCqu">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-md">
+<h3 class="font-headline-md text-headline-md text-white">Global</h3>
+</div>
+</div>
+<!-- Health -->
+<div class="category-card relative overflow-hidden rounded-xl aspect-square group cursor-pointer bg-secondary">
+<img class="category-bg absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-700" data-alt="A minimalist medical laboratory setting with pristine white surfaces and advanced glass equipment. Subtle teal and blue accents highlight the precision of the space. The lighting is bright and sterile yet inviting, representing modern healthcare and scientific breakthroughs in an editorial, high-fidelity style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR8eflUtto9c9CM5zuEvJuOb-NLxiDr0ZJe4PIepUYc-jFE7maSG_B6sC5icmJkxyv9It48wsDoWCZjZWBCODhtmheSyXkW-0V14xekVhJJCw562_t8G4nQ5FBgu8rf_-_Yh5a7hw-Mhx2DTxWTRRJYMjJ_mJZEwduH78qgifuVPGbfAxJLnBFWpFRPxtuchKPob1zHiPq-292jz-as3GbCh-1kwrAkRxiyK5RKgJ_DNaCONyz4I85jyT3rpaAmRivbktIfhka4HBa">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-md">
+<h3 class="font-headline-md text-headline-md text-white">Health</h3>
+</div>
+</div>
+<!-- Economy -->
+<div class="category-card relative overflow-hidden rounded-xl aspect-[16/10] md:col-span-2 group cursor-pointer bg-surface-container-highest">
+<img class="category-bg absolute inset-0 w-full h-full object-cover opacity-30 transition-transform duration-700" data-alt="A professional stock market floor visualization with large digital displays showing rising blue and green candle charts. The atmosphere is energetic but orderly, with high-key lighting that emphasizes a clean and trustworthy financial environment. The palette is dominated by corporate blues and crisp whites." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7sLyeXLH9_0azdgbA_rfk9RYD1JXE2CsaQ4rRVwHDGAbmBE9k4TRj_HzVgW3298a9DuQdh7JZKm_WxT7dfUB9G08P1f_gbz7MT0L8X7hEL44ENKLEuGXpU98AeS2hqkvnXGwslCbjr2dIZUtAjPB8s5Z0INITBsuyEv18fz7ygg5h5fRvO9vxzDcuyJ2uZmiRf5jdRhctald_hhwjnTx2XrGy7ncEtbp21TGeo_onyPrOgyw45_P9cFui5qXKBwwvkCVdTzKNRi9X">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-lg">
+<h3 class="font-headline-md text-headline-md text-white">Economy</h3>
+</div>
+</div>
+</div>
+</section>
+<!-- Top Sources -->
+<section>
+<div class="flex items-center justify-between mb-lg">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Top Sources</h2>
+<button class="text-primary font-button text-button hover:underline">Manage Sources</button>
+</div>
+<div class="space-y-sm">
+<!-- Source Item -->
+<div class="flex items-center justify-between p-md bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest flex items-center justify-center font-bold text-primary border border-outline-variant">G</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Global Times</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">2.4M Followers</p>
+</div>
+</div>
+<button class="px-lg py-2 rounded-full border-1.5 border-primary text-primary font-button text-button hover:bg-primary hover:text-white transition-all">Follow</button>
+</div>
+<div class="flex items-center justify-between p-md bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center font-bold text-white">NR</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Radar Daily</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">850K Followers</p>
+</div>
+</div>
+<button class="px-lg py-2 rounded-full bg-primary text-white font-button text-button shadow-sm active:scale-95 transition-all">Following</button>
+</div>
+<div class="flex items-center justify-between p-md bg-surface-container-low rounded-xl border border-outline-variant hover:border-primary transition-all group">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container flex items-center justify-center font-bold text-white">TE</div>
+<div>
+<h4 class="font-headline-md text-headline-md text-on-surface">Tech Edge</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">1.2M Followers</p>
+</div>
+</div>
+<button class="px-lg py-2 rounded-full border-1.5 border-primary text-primary font-button text-button hover:bg-primary hover:text-white transition-all">Follow</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Trending Topics -->
+<aside class="lg:col-span-4">
+<div class="sticky top-24">
+<div class="bg-surface-container-low rounded-2xl border border-outline-variant p-lg shadow-sm">
+<div class="flex items-center gap-sm mb-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="trending_up">trending_up</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Trending Topics</h2>
+</div>
+<ul class="space-y-lg">
+<li class="group cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-primary mb-1 uppercase">1 · Technology</span>
+<span class="text-tertiary font-label-sm text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined !text-[14px]" data-icon="arrow_upward">arrow_upward</span> 12%
+                                    </span>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Generative AI Regulations</h5>
+<p class="font-body-md text-label-sm text-on-surface-variant mt-1">125k stories this morning</p>
+</li>
+<li class="group cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-primary mb-1 uppercase">2 · Economy</span>
+<span class="text-tertiary font-label-sm text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined !text-[14px]" data-icon="arrow_upward">arrow_upward</span> 8%
+                                    </span>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Global Interest Rates</h5>
+<p class="font-body-md text-label-sm text-on-surface-variant mt-1">82k stories trending</p>
+</li>
+<li class="group cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-primary mb-1 uppercase">3 · Space</span>
+<span class="text-tertiary font-label-sm text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined !text-[14px]" data-icon="trending_flat">trending_flat</span> 2%
+                                    </span>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Lunar Colony Update</h5>
+<p class="font-body-md text-label-sm text-on-surface-variant mt-1">45k stories tracked</p>
+</li>
+<li class="group cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-label-sm text-label-sm text-primary mb-1 uppercase">4 · Sports</span>
+<span class="text-error font-label-sm text-[10px] flex items-center gap-1">
+<span class="material-symbols-outlined !text-[14px]" data-icon="arrow_downward">arrow_downward</span> 5%
+                                    </span>
+</div>
+<h5 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors">Transfer Window News</h5>
+<p class="font-body-md text-label-sm text-on-surface-variant mt-1">39k stories active</p>
+</li>
+</ul>
+<button class="w-full mt-xl py-md bg-surface-container-high hover:bg-surface-container-highest rounded-xl font-button text-button transition-colors">Discover More Topics</button>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden bg-surface/95 backdrop-blur-md border-t border-outline-variant shadow-lg h-16 flex justify-around items-center px-margin-mobile">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary bg-primary-container/10 rounded-xl px-3 py-1 transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-[10px]">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-sm text-[10px]">Pipeline</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-sm text-[10px]">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-[10px]">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for follow buttons
+        document.querySelectorAll('button').forEach(btn => {
+            if(btn.innerText === 'Follow') {
+                btn.addEventListener('click', function() {
+                    if(this.innerText === 'Follow') {
+                        this.innerText = 'Following';
+                        this.classList.remove('text-primary', 'border-primary');
+                        this.classList.add('bg-primary', 'text-white');
+                    } else {
+                        this.innerText = 'Follow';
+                        this.classList.add('text-primary', 'border-primary');
+                        this.classList.remove('bg-primary', 'text-white');
+                    }
+                });
+            }
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('shadow-md');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('shadow-md');
+        });
+    </script>
+
+
+<button class="fixed bottom-20 right-4 md:bottom-8 md:right-8 z-50 w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group active:scale-95 animate-[pulse_2s_infinite]">
+  <span class="material-symbols-outlined !text-[28px] group-hover:scale-110 transition-transform" data-icon="chat_bubble">chat_bubble</span>
+  <span class="absolute inset-0 rounded-full bg-primary/40 -z-10 animate-ping"></span>
+</button></body></html>

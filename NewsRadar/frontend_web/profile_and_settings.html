@@ -1,0 +1,363 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Profile &amp; Settings - NewsRadar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#004e9f",
+                      "error": "#ba1a1a",
+                      "surface-container-highest": "#e5e2e1",
+                      "outline": "#727784",
+                      "on-tertiary": "#ffffff",
+                      "on-tertiary-fixed": "#002204",
+                      "tertiary-fixed-dim": "#78dc77",
+                      "on-secondary-fixed-variant": "#8c1520",
+                      "primary-container": "#0066cc",
+                      "on-background": "#1b1c1c",
+                      "on-secondary-fixed": "#410006",
+                      "surface-container": "#f0eded",
+                      "on-error": "#ffffff",
+                      "primary-fixed": "#d7e3ff",
+                      "inverse-on-surface": "#f3f0ef",
+                      "surface-container-high": "#eae7e7",
+                      "outline-variant": "#c1c6d5",
+                      "on-primary-fixed": "#001b3e",
+                      "tertiary": "#005e17",
+                      "on-primary-container": "#dfe8ff",
+                      "tertiary-fixed": "#94f990",
+                      "surface": "#fcf9f8",
+                      "secondary-fixed": "#ffdad8",
+                      "on-tertiary-container": "#9aff96",
+                      "background": "#fcf9f8",
+                      "tertiary-container": "#047921",
+                      "on-primary-fixed-variant": "#00458e",
+                      "on-tertiary-fixed-variant": "#005313",
+                      "surface-dim": "#dcd9d9",
+                      "secondary-fixed-dim": "#ffb3b0",
+                      "on-surface-variant": "#414753",
+                      "primary-fixed-dim": "#aac7ff",
+                      "surface-bright": "#fcf9f8",
+                      "on-secondary": "#ffffff",
+                      "inverse-surface": "#303030",
+                      "secondary-container": "#ff6b6b",
+                      "on-surface": "#1b1c1c",
+                      "inverse-primary": "#aac7ff",
+                      "on-error-container": "#93000a",
+                      "secondary": "#ae2f34",
+                      "surface-variant": "#e5e2e1",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#6d0010",
+                      "surface-tint": "#005cba",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "error-container": "#ffdad6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "md": "16px",
+                      "xl": "40px",
+                      "sm": "8px",
+                      "margin-mobile": "16px",
+                      "lg": "24px",
+                      "xs": "4px",
+                      "container-max": "1280px",
+                      "base": "8px"
+              },
+              "fontFamily": {
+                      "headline-xl-mobile": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "label-sm": ["JetBrains Mono"],
+                      "headline-xl": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "button": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fcf9f8;
+            color: #1b1c1c;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #004e9f;
+        }
+        .toggle-checkbox:checked + .toggle-label .toggle-dot {
+            transform: translateX(100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen font-body-md text-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm w-full sticky top-0 z-50">
+<div class="flex items-center justify-between px-md py-sm max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed">radar</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NewsRadar</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="hover:bg-surface-container-high transition-colors p-sm rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Profile" class="w-full h-full object-cover" data-alt="A professional close-up portrait of a young man with a friendly expression, set against a soft-focus corporate office background. The lighting is natural and bright, echoing a light-mode UI aesthetic. The composition is clean and minimalist, emphasizing high-fidelity photography with a calm, intelligent mood suitable for a premium news application user profile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5ow-0bbnri6WEqMX9Svbz-Tj9vZRxHBQMnXtE7disFeIE2C7mxsqqt8v8zDFcf9tcoNxnLlRvvKc8ofCoz_ZxyMf8-yvPccwvhe5PbKWGHs1m6MBuysEvxt29kf9YHGJRRxflyK3jq1NDtMBHZyAPBL1zh-isIDuDgWWdkdYp3z663snvCGeMPgm4h9ncAu-rv9RpVCyqbnKai34NKaoFLvxIT_ilegjYOC2E6hov5Y6E_FACH3OuRYRANp2093CExn0T-3p3_gvD">
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-xl flex flex-col gap-xl pb-32">
+<!-- Profile Header Section -->
+<section class="flex flex-col md:flex-row items-start md:items-center gap-lg">
+<div class="relative group">
+<div class="w-24 h-24 md:w-32 md:h-32 rounded-xl overflow-hidden shadow-sm border-2 border-surface-container-highest">
+<img alt="User" class="w-full h-full object-cover" data-alt="A high-resolution professional headshot of a person with a slight smile, looking directly at the camera. The background is a clean, neutral gray that complements a sophisticated corporate modernism style. The lighting is soft and even, highlighting clear skin textures and professional attire, perfect for a high-end data-driven news platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxB2JGi-q2vCaEyEdMttzjVDmUHeF6xQWWYX7CQAHKfFiBEVYJDSFLU8NlPZ3NutRfKibvsckMtR7kuItjegFwmCR7C5Ybqc1MRtEtcvrvGU-ouN30wPTDupEAsvfnWNSJnrL2IvbHISfPj1Tv6nhX6Gm3N1RBebAtDie1TJcAjZe8NEPN2RIoFYdFucLuN1eEXvoMobmw4POKhOp56JHlUsGl2E3QMeK0t8cxGU2w_-OxW9qtbCtmoFCGnCxpzuvptduK6FlqNSuy">
+</div>
+<button class="absolute -bottom-2 -right-2 bg-primary text-on-primary p-2 rounded-lg shadow-lg active:scale-90 transition-transform">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<div class="flex-1 space-y-xs">
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Alexander Thorne</h2>
+<div class="flex items-center gap-sm text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Member Since</span>
+<span class="font-label-sm text-label-sm text-primary">OCT 2023</span>
+</div>
+<p class="text-on-surface-variant font-body-md max-w-lg">Senior Data Analyst &amp; Technology Enthusiast. Curating a personalized feed of global finance and AI breakthroughs.</p>
+</div>
+</section>
+<!-- Stats & Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-lg">
+<!-- Activity Stats (Left Side) -->
+<div class="md:col-span-4 flex flex-col gap-md">
+<div class="p-lg bg-surface border border-outline-variant rounded-xl shadow-sm hover:shadow-md transition-shadow">
+<span class="font-label-sm text-label-sm text-outline uppercase">Activity Stats</span>
+<div class="mt-lg grid grid-cols-2 gap-lg">
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-primary">1,284</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Articles Read</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-secondary">42</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Bookmarks</span>
+</div>
+</div>
+<div class="mt-xl pt-lg border-t border-outline-variant">
+<div class="flex items-center justify-between mb-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Reading Goal</span>
+<span class="font-label-sm text-label-sm text-primary">85%</span>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="w-[85%] h-full bg-primary transition-all duration-1000"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interests Summary (Right Side) -->
+<div class="md:col-span-8 p-lg bg-surface border border-outline-variant rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-lg">
+<span class="font-label-sm text-label-sm text-outline uppercase">Preferred Interests</span>
+<button class="text-primary font-button flex items-center gap-xs hover:underline decoration-2 underline-offset-4">
+                        Edit Interests <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<div class="flex flex-wrap gap-sm">
+<span class="px-md py-sm bg-primary-container/10 text-primary border border-primary-container/20 rounded-full font-button flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">memory</span> Artificial Intelligence
+                    </span>
+<span class="px-md py-sm bg-secondary-container/10 text-secondary border border-secondary-container/20 rounded-full font-button flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">payments</span> Global Finance
+                    </span>
+<span class="px-md py-sm bg-surface-container-highest text-on-surface-variant border border-outline-variant rounded-full font-button flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">public</span> Geopolitics
+                    </span>
+<span class="px-md py-sm bg-surface-container-highest text-on-surface-variant border border-outline-variant rounded-full font-button flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">rocket_launch</span> Aerospace
+                    </span>
+<span class="px-md py-sm bg-surface-container-highest text-on-surface-variant border border-outline-variant rounded-full font-button flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">eco</span> Sustainability
+                    </span>
+</div>
+<div class="mt-lg p-md bg-surface-container-low rounded-lg border border-outline-variant border-dashed">
+<p class="text-on-surface-variant text-sm italic">"NewsRadar is currently prioritizing tech-heavy finance news based on your recent activity."</p>
+</div>
+</div>
+</div>
+<!-- Account Settings Section -->
+<section class="space-y-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface border-b border-outline-variant pb-sm">Account Settings</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Appearance & Toggles -->
+<div class="space-y-md">
+<div class="flex items-center justify-between p-md hover:bg-surface-container transition-colors rounded-lg group cursor-pointer">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">dark_mode</span>
+<div>
+<p class="font-button text-on-surface">Dark Mode</p>
+<p class="text-sm text-on-surface-variant">Adjust interface to low-light environment</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out bg-surface-container-highest rounded-full cursor-pointer">
+<input class="sr-only toggle-checkbox" id="darkToggle" onclick="document.documentElement.classList.toggle('dark')" type="checkbox">
+<label class="toggle-label block w-12 h-6 bg-outline-variant rounded-full cursor-pointer transition-colors duration-200" for="darkToggle">
+<span class="toggle-dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out"></span>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-between p-md hover:bg-surface-container transition-colors rounded-lg group cursor-pointer">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">notifications_active</span>
+<div>
+<p class="font-button text-on-surface">Push Notifications</p>
+<p class="text-sm text-on-surface-variant">Instant alerts for breaking news</p>
+</div>
+</div>
+<div class="relative inline-block w-12 h-6 transition duration-200 ease-in-out bg-surface-container-highest rounded-full cursor-pointer">
+<input checked="" class="sr-only toggle-checkbox" id="notifToggle" type="checkbox">
+<label class="toggle-label block w-12 h-6 bg-outline-variant rounded-full cursor-pointer transition-colors duration-200" for="notifToggle">
+<span class="toggle-dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out"></span>
+</label>
+</div>
+</div>
+</div>
+<!-- Privacy & Security -->
+<div class="space-y-md">
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container transition-colors rounded-lg group text-left">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">lock</span>
+<div>
+<p class="font-button text-on-surface">Privacy &amp; Security</p>
+<p class="text-sm text-on-surface-variant">Manage passwords and two-factor auth</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+<button class="w-full flex items-center justify-between p-md hover:bg-surface-container transition-colors rounded-lg group text-left">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-outline group-hover:text-primary">database</span>
+<div>
+<p class="font-button text-on-surface">Data Usage</p>
+<p class="text-sm text-on-surface-variant">Control how your data is analyzed by AI</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Logout Action -->
+<section class="mt-xl pt-xl border-t border-outline-variant flex flex-col md:flex-row items-center justify-between gap-lg">
+<div class="text-center md:text-left">
+<p class="font-button text-on-surface">Need help?</p>
+<p class="text-sm text-on-surface-variant">Check our <a class="text-primary hover:underline" href="#">Support Center</a> or read our <a class="text-primary hover:underline" href="#">Privacy Policy</a>.</p>
+</div>
+<div class="flex gap-md">
+<button class="px-lg py-sm border-1.5 border-primary text-primary rounded-lg font-button hover:bg-primary/5 transition-colors active:scale-95 duration-150">
+                    Switch Account
+                </button>
+<button class="px-lg py-sm bg-error text-on-error rounded-lg font-button hover:bg-error/90 shadow-sm transition-all active:scale-95 duration-150 flex items-center gap-sm">
+<span class="material-symbols-outlined text-[18px]">logout</span> Logout
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden bg-surface/95 backdrop-blur-md border-t border-outline-variant dark:border-outline shadow-lg h-16 px-margin-mobile flex justify-around items-center">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm-mobile">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm-mobile">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm-mobile">Pipeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-sm text-label-sm-mobile">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-container/10 rounded-xl px-3 py-1 transition-all active:scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm-mobile font-bold">Profile</span>
+</a>
+</nav>
+<!-- Desktop Navigation (Integrated into layout via Sidebar or Header logic, but keeping minimal here for specific task) -->
+<div class="hidden md:flex fixed top-24 left-gutter flex-col gap-lg">
+<a class="p-sm text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="p-sm text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+</a>
+<a class="p-sm text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+</a>
+<a class="p-sm text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+</a>
+<a class="p-sm text-primary bg-primary-container/10 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</a>
+</div>
+<script>
+        // Simple micro-interaction for interest chips
+        document.querySelectorAll('.font-button.flex.items-center.gap-sm').forEach(chip => {
+            chip.addEventListener('click', () => {
+                chip.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    chip.style.transform = 'scale(1)';
+                }, 100);
+            });
+        });
+
+        // Tonal layering for header on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.add('bg-surface/90');
+                header.classList.add('backdrop-blur-md');
+            } else {
+                header.classList.remove('shadow-md');
+                header.classList.remove('bg-surface/90');
+                header.classList.remove('backdrop-blur-md');
+            }
+        });
+    </script>
+</body></html>

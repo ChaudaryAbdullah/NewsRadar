@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_5663a74b158b",
+  "article_id": "278bfed3e412326a",
+  "article_title": "ACM Awards 2026 full coverage and winners list: Cody Johnson is Entertainer of the Year, Ella Langley sweeps; Kacey Musgraves and others take the stage - Yahoo",
+  "timestamp": "2026-05-19T07:08:31.295059+00:00",
+  "total_duration_ms": 7801,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: Yahoo Entertainment"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 2501,
+      "tokens_used": 752,
+      "status": "SUCCESS",
+      "output_summary": "Extracted 3 claims, 7 entities, sentiment=POSITIVE"
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 2690,
+      "tokens_used": 520,
+      "status": "SUCCESS",
+      "output_summary": "Risk=LOW, Misinfo prob=0%, Source reliability=55%"
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 2609,
+      "tokens_used": 738,
+      "status": "SUCCESS",
+      "output_summary": "Generated 3 recommended actions"
+    }
+  ]
+}

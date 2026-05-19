@@ -1,0 +1,403 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Pipeline Execution - NewsRadar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf9f8;
+            margin: 0;
+            padding-bottom: 80px; /* Space for BottomNavBar */
+            padding-top: 80px; /* Space for TopAppBar */
+        }
+        .pipeline-line {
+            position: absolute;
+            left: 23px;
+            top: 40px;
+            bottom: -24px;
+            width: 2px;
+            background: repeating-linear-gradient(to bottom, #005e17 0%, #005e17 50%, transparent 50%, transparent 100%);
+            background-size: 2px 8px;
+        }
+        .stage-card:last-child .pipeline-line {
+            display: none;
+        }
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#dfe8ff",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#d7e3ff",
+                      "on-secondary-fixed": "#410006",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#047921",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#6d0010",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#0066cc",
+                      "secondary-container": "#ff6b6b",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#94f990",
+                      "on-tertiary-fixed": "#002204",
+                      "surface": "#fcf9f8",
+                      "surface-tint": "#005cba",
+                      "inverse-surface": "#303030",
+                      "tertiary-fixed-dim": "#78dc77",
+                      "on-primary-fixed-variant": "#00458e",
+                      "tertiary": "#005e17",
+                      "on-surface-variant": "#414753",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "secondary-fixed-dim": "#ffb3b0",
+                      "surface-bright": "#fcf9f8",
+                      "on-surface": "#1b1c1c",
+                      "on-tertiary-container": "#9aff96",
+                      "background": "#fcf9f8",
+                      "secondary": "#ae2f34",
+                      "surface-container": "#f0eded",
+                      "on-tertiary-fixed-variant": "#005313",
+                      "surface-container-high": "#eae7e7",
+                      "surface-variant": "#e5e2e1",
+                      "outline-variant": "#c1c6d5",
+                      "surface-container-highest": "#e5e2e1",
+                      "inverse-primary": "#aac7ff",
+                      "surface-dim": "#dcd9d9",
+                      "on-error": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "primary": "#004e9f",
+                      "primary-fixed-dim": "#aac7ff",
+                      "secondary-fixed": "#ffdad8",
+                      "outline": "#727784",
+                      "on-primary-fixed": "#001b3e",
+                      "on-background": "#1b1c1c",
+                      "on-secondary-fixed-variant": "#8c1520"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "lg": "24px",
+                      "container-max": "1280px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "xl": "40px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-sm": ["JetBrains Mono"],
+                      "headline-xl": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-xl-mobile": ["Inter"],
+                      "button": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-gutter h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary font-headline-md text-headline-md">analytics</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">NewsRadar</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-low transition-colors p-2 rounded-full">search</button>
+<div class="w-8 h-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATi4ybE4rFBN_m0jPl7y3JFQ654_-aVR771to9ggXHxwcPUbFMeIiu4AUzplAvJQ6hpNQM5veNnqULgxs9zHjsyCqxQZ5U8Hdss6ecruljvIv8p5PncGB_pB4kt5qGlxPwkLl1GMsFnezhE9WHAWpHCsvU9VO4SaRs9MeNYGPVIrjcXAzgpn-Hb8kopFwzSBwLMRFa4DkQvqAZa3KQVDzz2rl9V-WAen_Hfc7G6tuNVzjJhWCkfHWneXoN_-R_RTjBhJLN3Oy6MOCs">
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-gutter py-md">
+<!-- Header Section -->
+<div class="mb-xl">
+<h2 class="font-headline-xl text-headline-xl mb-base">Pipeline Execution</h2>
+<p class="font-body-md text-on-surface-variant">Real-time orchestration monitoring of global intelligence streams.</p>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Health Overview (Level 1 Elevation) -->
+<div class="lg:col-span-4 space-y-gutter">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_2px_4px_rgba(0,0,0,0.05)]">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-md">System Health</h3>
+<div class="flex flex-col items-center py-md">
+<div class="relative w-48 h-48 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90">
+<circle class="text-surface-container-high" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-width="8"></circle>
+<circle class="text-tertiary-container" cx="96" cy="96" fill="transparent" r="88" stroke="currentColor" stroke-dasharray="552.92" stroke-dashoffset="110.58" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="font-headline-xl text-headline-xl text-tertiary">98%</span>
+<span class="font-label-sm text-label-sm text-tertiary-container bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded-full">HEALTHY</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md mt-lg border-t border-outline-variant pt-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">THROUGHPUT</p>
+<p class="font-headline-md text-headline-md">1,240 <span class="text-sm font-normal">art/m</span></p>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">LATENCY</p>
+<p class="font-headline-md text-headline-md">142 <span class="text-sm font-normal">ms</span></p>
+</div>
+</div>
+</div>
+<!-- Metrics Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-lg shadow-[0px_2px_4px_rgba(0,0,0,0.05)]">
+<h3 class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-md">Node Load</h3>
+<div class="space-y-md">
+<div class="space-y-xs">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span>Cluster US-East</span>
+<span>65%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[65%]"></div>
+</div>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between font-label-sm text-label-sm">
+<span>Cluster EU-West</span>
+<span>42%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[42%]"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Vertical Timeline -->
+<div class="lg:col-span-8">
+<div class="flex flex-col gap-gutter">
+<!-- Stage 1 -->
+<div class="stage-card relative flex gap-md">
+<div class="pipeline-line"></div>
+<div class="z-10 w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary shrink-0">
+<span class="material-symbols-outlined">cloud_download</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest border-l-4 border-tertiary-container border-y border-r border-outline-variant rounded-r-xl p-md shadow-sm hover:scale-[1.01] transition-transform duration-200">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary mb-xs block">STAGE_01</span>
+<h4 class="font-headline-md text-headline-md">Data Collection</h4>
+</div>
+<span class="font-label-sm text-label-sm bg-tertiary-fixed-dim/30 text-on-tertiary-fixed-variant px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                                    COMPLETE
+                                </span>
+</div>
+<div class="flex items-center gap-xl mt-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SUCCESS RATE</p>
+<p class="font-headline-md text-headline-md text-tertiary">99.9%</p>
+</div>
+<div class="flex-1 h-12 flex items-end gap-1 px-md">
+<!-- Mini Chart Mockup -->
+<div class="w-2 bg-tertiary-container h-[60%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[80%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[70%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[90%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[85%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[95%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="stage-card relative flex gap-md">
+<div class="pipeline-line"></div>
+<div class="z-10 w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary shrink-0">
+<span class="material-symbols-outlined">code</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest border-l-4 border-tertiary-container border-y border-r border-outline-variant rounded-r-xl p-md shadow-sm hover:scale-[1.01] transition-transform duration-200">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-sm text-label-sm text-tertiary mb-xs block">STAGE_02</span>
+<h4 class="font-headline-md text-headline-md">Parsing</h4>
+</div>
+<span class="font-label-sm text-label-sm bg-tertiary-fixed-dim/30 text-on-tertiary-fixed-variant px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                                    COMPLETE
+                                </span>
+</div>
+<div class="flex items-center gap-xl mt-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">SUCCESS RATE</p>
+<p class="font-headline-md text-headline-md text-tertiary">98.4%</p>
+</div>
+<div class="flex-1 h-12 flex items-end gap-1 px-md">
+<div class="w-2 bg-tertiary-container h-[40%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[50%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[70%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[65%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[80%] rounded-t-sm"></div>
+<div class="w-2 bg-tertiary-container h-[75%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="stage-card relative flex gap-md">
+<div class="pipeline-line"></div>
+<div class="z-10 w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container shrink-0 animate-pulse-soft">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<div class="flex-1 bg-surface-container-lowest border-l-4 border-primary-container border-y border-r border-outline-variant rounded-r-xl p-md shadow-sm hover:scale-[1.01] transition-transform duration-200">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-sm text-label-sm text-primary mb-xs block">STAGE_03</span>
+<h4 class="font-headline-md text-headline-md">AI Analysis</h4>
+</div>
+<span class="font-label-sm text-label-sm bg-primary-fixed/50 text-on-primary-fixed-variant px-3 py-1 rounded-full flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                                    IN PROGRESS
+                                </span>
+</div>
+<div class="flex items-center gap-xl mt-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">PROCESSING</p>
+<p class="font-headline-md text-headline-md text-primary">842 <span class="text-sm font-normal">queued</span></p>
+</div>
+<div class="flex-1 h-12 flex items-end gap-1 px-md">
+<div class="w-2 bg-primary-container h-[20%] rounded-t-sm"></div>
+<div class="w-2 bg-primary-container h-[45%] rounded-t-sm"></div>
+<div class="w-2 bg-primary-container h-[60%] rounded-t-sm"></div>
+<div class="w-2 bg-primary-container h-[35%] rounded-t-sm"></div>
+<div class="w-2 bg-primary-container h-[55%] rounded-t-sm"></div>
+<div class="w-2 bg-primary-container h-[40%] rounded-t-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="stage-card relative flex gap-md">
+<div class="pipeline-line"></div>
+<div class="z-10 w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined">person_pin</span>
+</div>
+<div class="flex-1 bg-surface-container-low border-l-4 border-outline-variant border-y border-r border-outline-variant rounded-r-xl p-md opacity-60">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">STAGE_04</span>
+<h4 class="font-headline-md text-headline-md">Personalization</h4>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full">PENDING</span>
+</div>
+<div class="flex items-center gap-xl mt-md">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">EST. WAIT</p>
+<p class="font-headline-md text-headline-md">--</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Stage 5 -->
+<div class="stage-card relative flex gap-md">
+<div class="z-10 w-12 h-12 rounded-full bg-surface-container-high border border-outline-variant flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined">send</span>
+</div>
+<div class="flex-1 bg-surface-container-low border-l-4 border-outline-variant border-y border-r border-outline-variant rounded-r-xl p-md opacity-60">
+<div class="flex justify-between items-start mb-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mb-xs block">STAGE_05</span>
+<h4 class="font-headline-md text-headline-md">Distribution</h4>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-3 py-1 rounded-full">PENDING</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe h-16 bg-surface border-t border-outline-variant shadow-sm">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1" href="#">
+<span class="material-symbols-outlined">schema</span>
+<span class="font-label-sm text-label-sm">Pipeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="font-label-sm text-label-sm">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: Update health gauge slightly over time
+        const healthText = document.querySelector('.text-tertiary.font-headline-xl');
+        if (healthText) {
+            setInterval(() => {
+                const current = 98;
+                const variance = (Math.random() * 0.4) - 0.2;
+                healthText.innerText = (current + variance).toFixed(1) + '%';
+            }, 3000);
+        }
+
+        // Active state simulation for scale transform
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+            });
+            el.addEventListener('mouseup', () => {
+                el.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

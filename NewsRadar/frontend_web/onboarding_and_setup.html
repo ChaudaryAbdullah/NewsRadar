@@ -1,0 +1,354 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Welcome to NewsRadar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-container": "#dfe8ff",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed": "#d7e3ff",
+                    "on-secondary-fixed": "#410006",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#047921",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-primary": "#ffffff",
+                    "on-secondary-container": "#6d0010",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0066cc",
+                    "secondary-container": "#ff6b6b",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#94f990",
+                    "on-tertiary-fixed": "#002204",
+                    "surface": "#fcf9f8",
+                    "surface-tint": "#005cba",
+                    "inverse-surface": "#303030",
+                    "tertiary-fixed-dim": "#78dc77",
+                    "on-primary-fixed-variant": "#00458e",
+                    "tertiary": "#005e17",
+                    "on-surface-variant": "#414753",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f6f3f2",
+                    "secondary-fixed-dim": "#ffb3b0",
+                    "surface-bright": "#fcf9f8",
+                    "on-surface": "#1b1c1c",
+                    "on-tertiary-container": "#9aff96",
+                    "background": "#fcf9f8",
+                    "secondary": "#ae2f34",
+                    "surface-container": "#f0eded",
+                    "on-tertiary-fixed-variant": "#005313",
+                    "surface-container-high": "#eae7e7",
+                    "surface-variant": "#e5e2e1",
+                    "outline-variant": "#c1c6d5",
+                    "surface-container-highest": "#e5e2e1",
+                    "inverse-primary": "#aac7ff",
+                    "surface-dim": "#dcd9d9",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "primary": "#004e9f",
+                    "primary-fixed-dim": "#aac7ff",
+                    "secondary-fixed": "#ffdad8",
+                    "outline": "#727784",
+                    "on-primary-fixed": "#001b3e",
+                    "on-background": "#1b1c1c",
+                    "on-secondary-fixed-variant": "#8c1520"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "lg": "24px",
+                    "container-max": "1280px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "xl": "40px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-xl": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-xl-mobile": ["Inter"],
+                    "button": ["Inter"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .mesh-gradient {
+            background-color: #fcf9f8;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 78, 159, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(174, 47, 52, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(0, 94, 23, 0.05) 0px, transparent 50%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden mesh-gradient min-h-screen">
+<!-- Hero / Splash Step -->
+<section class="step-transition fixed inset-0 flex flex-col items-center justify-center px-margin-mobile z-50" id="step-0">
+<div class="max-w-md w-full text-center space-y-xl">
+<div class="flex flex-col items-center space-y-md">
+<div class="w-20 h-20 bg-primary rounded-xl flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-on-primary text-5xl" data-weight="fill" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-primary tracking-tight">NewsRadar</h1>
+<p class="font-label-sm text-label-sm text-outline uppercase tracking-widest">AI-Powered Intelligence</p>
+</div>
+<div class="relative group aspect-video w-full rounded-xl overflow-hidden shadow-2xl mb-xl">
+<img alt="Corporate Modernism" class="w-full h-full object-cover" data-alt="A sophisticated macro photograph of a high-resolution transparent glass display showing complex data visualizations and news streams. The lighting is crisp and cool, reflecting a professional corporate modernism aesthetic. Soft blue and neutral grey tones dominate the scene, creating a sense of calm intelligence and technological precision. The background is a blurred high-end office environment, emphasizing a premium and systematic data processing atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA10SBh6m9wyTX7jNFN6eAgebR317YB4Wq1mUDU0JJiWnXXgb9vb0YvKrQvxyefoojfVkeY3wtiHIL4FmEOo5RuTQr8aChxmwxv0ivQNtlafNHl_7F8gxhsx0vn_sZiuQReowJRzFLbsNiNjOHmjZ4b0g4enISOpOGkROGGVorqKrlm2oeLfJKA2RGuKkqLETH3DFq1clBXDSrA8gzOu8MV4EgsFZPizXJNt9vIfl-kP1D2FkKlaDrzkTmdI3c0M5vap6avICLapueT">
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+</div>
+<div class="flex flex-col gap-md">
+<button class="w-full h-12 bg-primary text-on-primary rounded-lg font-button hover:bg-primary-container transition-all active:scale-95" onclick="nextStep(1)">
+                    Sign Up
+                </button>
+<button class="w-full h-12 border-1.5 border-primary text-primary rounded-lg font-button hover:bg-surface-container-low transition-all active:scale-95" style="border-width: 1.5px;">
+                    Login
+                </button>
+</div>
+</div>
+</section>
+<!-- Setup Step 1: Interests -->
+<section class="step-transition fixed inset-0 flex flex-col items-center justify-center px-margin-mobile z-40 translate-x-full opacity-0" id="step-1">
+<div class="max-w-2xl w-full glass-card p-xl rounded-xl shadow-sm">
+<div class="mb-xl">
+<span class="font-label-sm text-label-sm text-primary mb-sm block">01 / 02</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Tell us what you like</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">We'll curate your radar based on these topics. <span class="text-secondary font-semibold">Select at least 3.</span></p>
+</div>
+<div class="flex flex-wrap gap-sm mb-xl" id="category-container">
+<!-- Category Chips -->
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">biotech</span> Technology
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">payments</span> Finance
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">health_and_safety</span> Health
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">public</span> Politics
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">science</span> Science
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">sports_basketball</span> Sports
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">theater_comedy</span> Entertainment
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">eco</span> Environment
+                </button>
+<button class="chip h-10 px-md rounded-full border border-outline-variant font-button text-on-surface-variant hover:border-primary transition-all flex items-center gap-xs" onclick="toggleChip(this)">
+<span class="material-symbols-outlined text-[18px]">travel</span> Travel
+                </button>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-on-surface-variant font-button flex items-center gap-xs hover:text-primary transition-colors" onclick="nextStep(0)">
+<span class="material-symbols-outlined">arrow_back</span> Back
+                </button>
+<button class="h-12 px-xl bg-primary text-on-primary rounded-lg font-button opacity-50 cursor-not-allowed transition-all" disabled="" id="next-1" onclick="nextStep(2)">
+                    Continue
+                </button>
+</div>
+</div>
+</section>
+<!-- Setup Step 2: Preferences -->
+<section class="step-transition fixed inset-0 flex flex-col items-center justify-center px-margin-mobile z-30 translate-x-full opacity-0" id="step-2">
+<div class="max-w-2xl w-full glass-card p-xl rounded-xl shadow-sm">
+<div class="mb-xl">
+<span class="font-label-sm text-label-sm text-primary mb-sm block">02 / 02</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Content Preferences</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-sm">Tailor your delivery experience.</p>
+</div>
+<div class="space-y-lg mb-xl">
+<!-- Language Selection -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Primary Language</label>
+<select class="w-full h-12 px-md rounded-lg border border-outline bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all">
+<option>English (Global)</option>
+<option>Spanish (ES)</option>
+<option>French (FR)</option>
+<option>German (DE)</option>
+</select>
+</div>
+<!-- Source Region -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Source Region</label>
+<div class="grid grid-cols-2 gap-sm">
+<button class="region h-12 rounded-lg border border-primary bg-primary-container text-on-primary-container font-button flex items-center justify-center gap-sm" onclick="selectSingle(this, 'region')">
+<span class="material-symbols-outlined text-[18px]">flag</span> International
+                        </button>
+<button class="region h-12 rounded-lg border border-outline font-button text-on-surface-variant flex items-center justify-center gap-sm" onclick="selectSingle(this, 'region')">
+<span class="material-symbols-outlined text-[18px]">location_on</span> Local Only
+                        </button>
+</div>
+</div>
+<!-- Notification Frequency -->
+<div class="flex flex-col gap-sm">
+<label class="font-label-sm text-label-sm text-on-surface-variant uppercase">Notification Frequency</label>
+<div class="flex flex-col gap-xs">
+<input class="w-full h-2 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary" max="3" min="1" type="range" value="2">
+<div class="flex justify-between text-[10px] font-label-sm text-outline">
+<span>MINIMAL</span>
+<span>BALANCED</span>
+<span>REAL-TIME</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<button class="text-on-surface-variant font-button flex items-center gap-xs hover:text-primary transition-colors" onclick="nextStep(1)">
+<span class="material-symbols-outlined">arrow_back</span> Back
+                </button>
+<button class="h-12 px-xl bg-primary text-on-primary rounded-lg font-button flex items-center gap-sm hover:bg-primary-container active:scale-95 transition-all" onclick="completeOnboarding()">
+                    Complete Setup <span class="material-symbols-outlined">check_circle</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Success Splash (Hidden initially) -->
+<section class="step-transition fixed inset-0 flex flex-col items-center justify-center px-margin-mobile z-20 translate-y-full opacity-0" id="step-success">
+<div class="text-center space-y-md">
+<div class="w-24 h-24 bg-tertiary rounded-full flex items-center justify-center mx-auto mb-lg shadow-lg animate-bounce">
+<span class="material-symbols-outlined text-on-tertiary text-5xl">done_all</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface">You're all set!</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-sm mx-auto">Your intelligence radar is being calibrated. Get ready for a smarter news experience.</p>
+<div class="pt-xl">
+<div class="flex items-center justify-center gap-sm text-primary font-label-sm">
+<div class="w-2 h-2 bg-primary rounded-full animate-ping"></div>
+                    GENERATING YOUR DASHBOARD...
+                </div>
+</div>
+</div>
+</section>
+<script>
+        let selectedCategories = 0;
+
+        function nextStep(stepNumber) {
+            const steps = [
+                document.getElementById('step-0'),
+                document.getElementById('step-1'),
+                document.getElementById('step-2'),
+                document.getElementById('step-success')
+            ];
+
+            steps.forEach((step, index) => {
+                if (index === stepNumber) {
+                    step.classList.remove('translate-x-full', '-translate-x-full', 'translate-y-full', 'opacity-0');
+                    step.classList.add('translate-x-0', 'opacity-100');
+                    step.style.pointerEvents = 'auto';
+                } else if (index < stepNumber) {
+                    step.classList.add('-translate-x-full', 'opacity-0');
+                    step.classList.remove('translate-x-0');
+                    step.style.pointerEvents = 'none';
+                } else {
+                    step.classList.add('translate-x-full', 'opacity-0');
+                    step.classList.remove('translate-x-0');
+                    step.style.pointerEvents = 'none';
+                }
+            });
+        }
+
+        function toggleChip(el) {
+            const isActive = el.classList.contains('bg-primary-container');
+            if (isActive) {
+                el.classList.remove('bg-primary-container', 'text-on-primary-container', 'border-primary');
+                el.classList.add('border-outline-variant', 'text-on-surface-variant');
+                selectedCategories--;
+            } else {
+                el.classList.add('bg-primary-container', 'text-on-primary-container', 'border-primary');
+                el.classList.remove('border-outline-variant', 'text-on-surface-variant');
+                selectedCategories++;
+            }
+
+            const btn = document.getElementById('next-1');
+            if (selectedCategories >= 3) {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        function selectSingle(el, groupClass) {
+            const elements = document.querySelectorAll('.' + groupClass);
+            elements.forEach(item => {
+                item.classList.remove('bg-primary-container', 'text-on-primary-container', 'border-primary');
+                item.classList.add('border-outline', 'text-on-surface-variant');
+            });
+            el.classList.add('bg-primary-container', 'text-on-primary-container', 'border-primary');
+            el.classList.remove('border-outline', 'text-on-surface-variant');
+        }
+
+        function completeOnboarding() {
+            const s2 = document.getElementById('step-2');
+            const success = document.getElementById('step-success');
+            
+            s2.classList.add('-translate-y-full', 'opacity-0');
+            success.classList.remove('translate-y-full', 'opacity-0');
+            success.classList.add('translate-y-0', 'opacity-100');
+
+            // Simulate redirect
+            setTimeout(() => {
+                console.log("Redirecting to Dashboard...");
+            }, 3000);
+        }
+
+        // Particle background micro-interaction
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            document.body.style.backgroundPosition = `${x * 20}px ${y * 20}px`;
+        });
+    </script>
+</body></html>

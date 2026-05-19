@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_a750763960cd",
+  "article_id": "92cee0aa9f5ea0db",
+  "article_title": "Drone strikes UAE nuclear plant as US and Iran signal they are prepared to resume war - The Seattle Times",
+  "timestamp": "2026-05-19T07:36:07.855827+00:00",
+  "total_duration_ms": 8115,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: The Seattle Times"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 2694,
+      "tokens_used": 652,
+      "status": "SUCCESS",
+      "output_summary": "Extracted 3 claims, 3 entities, sentiment=NEGATIVE"
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 2455,
+      "tokens_used": 507,
+      "status": "SUCCESS",
+      "output_summary": "Risk=MEDIUM, Misinfo prob=0%, Source reliability=55%"
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 2965,
+      "tokens_used": 732,
+      "status": "SUCCESS",
+      "output_summary": "Generated 3 recommended actions"
+    }
+  ]
+}

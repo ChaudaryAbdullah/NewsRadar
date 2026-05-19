@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NewsRadar Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#ffb3b0",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#ffdad8",
+                        "on-primary-fixed": "#001b3e",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#410006",
+                        "outline": "#727784",
+                        "tertiary-container": "#047921",
+                        "on-surface-variant": "#414753",
+                        "on-primary-container": "#dfe8ff",
+                        "surface-tint": "#005cba",
+                        "on-surface": "#1b1c1c",
+                        "surface-bright": "#fcf9f8",
+                        "on-error-container": "#93000a",
+                        "primary": "#004e9f",
+                        "inverse-primary": "#aac7ff",
+                        "on-background": "#1b1c1c",
+                        "surface-container-lowest": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary-container": "#6d0010",
+                        "surface-container-highest": "#e5e2e1",
+                        "primary-fixed": "#d7e3ff",
+                        "tertiary": "#005e17",
+                        "surface-container-high": "#eae7e7",
+                        "surface": "#fcf9f8",
+                        "inverse-surface": "#303030",
+                        "inverse-on-surface": "#f3f0ef",
+                        "surface-container": "#f0eded",
+                        "primary-fixed-dim": "#aac7ff",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "on-primary-fixed-variant": "#00458e",
+                        "on-secondary-fixed-variant": "#8c1520",
+                        "secondary-container": "#ff6b6b",
+                        "surface-container-low": "#f6f3f2",
+                        "primary-container": "#0066cc",
+                        "on-error": "#ffffff",
+                        "secondary": "#ae2f34",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#94f990",
+                        "on-tertiary-container": "#9aff96",
+                        "outline-variant": "#c1c6d5",
+                        "surface-variant": "#e5e2e1",
+                        "on-tertiary-fixed": "#002204",
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary": "#ffffff",
+                        "background": "#fcf9f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "container-max": "1280px",
+                        "base": "8px",
+                        "xl": "40px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "button": ["Inter"],
+                        "headline-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-xl-mobile": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chat-container::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #e5e2e1;
+            border-radius: 10px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm w-full sticky top-0 z-50">
+<div class="flex items-center justify-between px-md py-sm max-w-container-max mx-auto h-16">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed text-[28px]" data-icon="radar">radar</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NewsRadar Assistant</h1>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="close">close</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content / Chat Area -->
+<main class="flex-grow flex flex-col max-w-4xl mx-auto w-full px-margin-mobile md:px-gutter py-md relative overflow-hidden">
+<!-- Chat History -->
+<div class="chat-container flex-grow overflow-y-auto space-y-lg pb-xl scroll-smooth" id="chatHistory">
+<!-- Bot Message -->
+<div class="flex gap-md items-end animate-fade-in">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary text-sm" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="max-w-[85%] bg-surface-container-high rounded-xl rounded-bl-none p-md shadow-sm">
+<p class="font-body-md text-on-surface">Hello! I'm your NewsRadar Intelligence partner. I can help you synthesize today's headlines, verify claims, or deep-dive into specific industry pipelines. What are we investigating today?</p>
+<span class="block mt-xs font-label-sm text-label-sm text-on-surface-variant">09:41 AM</span>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-md items-end justify-end animate-fade-in">
+<div class="max-w-[85%] bg-primary text-on-primary rounded-xl rounded-br-none p-md shadow-sm">
+<p class="font-body-md">What's the latest update on the semiconductor supply chain in Southeast Asia?</p>
+<span class="block mt-xs font-label-sm text-label-sm text-on-primary/70 text-right">09:42 AM</span>
+</div>
+</div>
+<!-- Bot Message with Data Insights -->
+<div class="flex gap-md items-end animate-fade-in" style="animation-delay: 0.1s;">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary text-sm" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="max-w-[85%] bg-surface-container-high rounded-xl rounded-bl-none p-md shadow-sm">
+<p class="font-body-md text-on-surface mb-md">I've tracked a 12% increase in regional investment activity over the last 48 hours. Key developments include:</p>
+<div class="space-y-sm">
+<div class="bg-surface-container-low border-l-4 border-primary p-sm rounded">
+<h4 class="font-label-sm text-label-sm text-primary uppercase">Pipeline Stage ID: SC-402</h4>
+<p class="text-sm font-medium">New fabrication facility announced in Penang, Malaysia.</p>
+</div>
+<div class="bg-surface-container-low border-l-4 border-tertiary p-sm rounded">
+<h4 class="font-label-sm text-label-sm text-tertiary uppercase">Fact Check: Verified</h4>
+<p class="text-sm font-medium">Vietnam trade ministry confirms 3 new export corridors.</p>
+</div>
+</div>
+<span class="block mt-xs font-label-sm text-label-sm text-on-surface-variant">09:42 AM</span>
+</div>
+</div>
+</div>
+<!-- Sticky Interaction Area -->
+<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background/95 to-transparent pt-lg pb-md px-margin-mobile">
+<div class="max-w-4xl mx-auto space-y-md">
+<!-- Quick Actions Chips -->
+<div class="flex items-center gap-sm overflow-x-auto no-scrollbar pb-sm">
+<button class="shrink-0 px-md py-sm bg-surface-container-highest hover:bg-primary-container/20 border border-outline-variant rounded-full text-on-surface-variant font-button text-button transition-all flex items-center gap-sm active:scale-95">
+<span class="material-symbols-outlined text-[18px]" data-icon="summarize">summarize</span>
+                        Summarize latest news
+                    </button>
+<button class="shrink-0 px-md py-sm bg-surface-container-highest hover:bg-primary-container/20 border border-outline-variant rounded-full text-on-surface-variant font-button text-button transition-all flex items-center gap-sm active:scale-95">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+                        Explain this article
+                    </button>
+<button class="shrink-0 px-md py-sm bg-surface-container-highest hover:bg-primary-container/20 border border-outline-variant rounded-full text-on-surface-variant font-button text-button transition-all flex items-center gap-sm active:scale-95">
+<span class="material-symbols-outlined text-[18px]" data-icon="verified_user">verified_user</span>
+                        Fact-check this claim
+                    </button>
+</div>
+<!-- Input Field -->
+<div class="flex items-end gap-sm bg-surface-container-lowest border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary rounded-xl p-xs shadow-md transition-all">
+<button class="p-md text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="mic">mic</span>
+</button>
+<textarea class="flex-grow bg-transparent border-none focus:ring-0 py-md px-sm resize-none font-body-md text-on-surface placeholder:text-outline" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'" placeholder="Ask NewsRadar Intelligence..." rows="1"></textarea>
+<button class="m-xs p-md bg-primary text-on-primary rounded-lg hover:brightness-110 active:scale-95 transition-all flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<!-- Footer disclaimer -->
+<p class="text-center font-label-sm text-label-sm text-outline opacity-70">
+                    NewsRadar AI may occasionally provide inaccurate data. Verify critical information.
+                </p>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 md:hidden border-t border-outline-variant dark:border-outline">
+<div class="flex justify-around items-center h-16 px-margin-mobile bg-surface/95 backdrop-blur-md">
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-[10px]">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-[10px]">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-container/10 rounded-xl px-3 py-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-label-sm text-[10px]">Pipeline</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-sm text-[10px]">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-[10px]">Profile</span>
+</button>
+</div>
+</nav>
+<script>
+        // Simple micro-interaction for the chat input
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const text = textarea.value.trim();
+                if (text) {
+                    appendUserMessage(text);
+                    textarea.value = '';
+                    textarea.style.height = 'auto';
+                }
+            }
+        });
+
+        function appendUserMessage(text) {
+            const chatHistory = document.getElementById('chatHistory');
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex gap-md items-end justify-end animate-fade-in';
+            messageDiv.innerHTML = `
+                <div class="max-w-[85%] bg-primary text-on-primary rounded-xl rounded-br-none p-md shadow-sm">
+                    <p class="font-body-md">${text}</p>
+                    <span class="block mt-xs font-label-sm text-label-sm text-on-primary/70 text-right">${now}</span>
+                </div>
+            `;
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            // Trigger simulated bot response
+            setTimeout(() => {
+                appendBotMessage("Processing your inquiry through our real-time radar modules...");
+            }, 800);
+        }
+
+        function appendBotMessage(text) {
+            const chatHistory = document.getElementById('chatHistory');
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex gap-md items-end animate-fade-in';
+            messageDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-on-primary text-sm" style="font-variation-settings: 'FILL' 1;" data-icon="smart_toy">smart_toy</span>
+                </div>
+                <div class="max-w-[85%] bg-surface-container-high rounded-xl rounded-bl-none p-md shadow-sm">
+                    <p class="font-body-md text-on-surface">${text}</p>
+                    <span class="block mt-xs font-label-sm text-label-sm text-on-surface-variant">${now}</span>
+                </div>
+            `;
+            chatHistory.appendChild(messageDiv);
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+
+        // Initialize scroll position
+        const chatHistory = document.getElementById('chatHistory');
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    </script>
+</body></html>

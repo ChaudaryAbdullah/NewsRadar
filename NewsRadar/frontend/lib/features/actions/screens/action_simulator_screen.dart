@@ -155,9 +155,10 @@ class _ActionCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isSelected ? color.withOpacity(0.12) : AppColors.primaryLight,
+          color: isSelected ? color.withOpacity(0.2) : AppColors.primaryLight,
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: isSelected ? color.withOpacity(0.5) : AppColors.divider, width: isSelected ? 1.5 : 1),
+          border: Border.all(color: isSelected ? color : AppColors.divider, width: isSelected ? 2 : 1),
+          boxShadow: isSelected ? [BoxShadow(color: color.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 2))] : [],
         ),
         child: Row(children: [
           // Priority badge

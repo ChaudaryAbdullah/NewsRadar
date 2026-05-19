@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_d6b6ba4dda1b",
+  "article_id": "fc8dd0257ffd42a0",
+  "article_title": "GTA 6 'About 18 Months Behind the Original Date,' Take-Two Boss Says - IGN",
+  "timestamp": "2026-05-19T09:17:39.358250+00:00",
+  "total_duration_ms": 19736,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: IGN"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 2288,
+      "tokens_used": 644,
+      "status": "SUCCESS",
+      "output_summary": "Extracted 3 claims, 1 entities, sentiment=NEUTRAL"
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 853,
+      "tokens_used": 521,
+      "status": "SUCCESS",
+      "output_summary": "Risk=MEDIUM, Misinfo prob=0%, Source reliability=55%"
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 16594,
+      "tokens_used": 786,
+      "status": "SUCCESS",
+      "output_summary": "Generated 3 recommended actions"
+    }
+  ]
+}

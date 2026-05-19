@@ -1,0 +1,394 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Content Queue | NewsRadar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body {
+            background-color: #fcf9f8;
+            color: #1b1c1c;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c6d5;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#dfe8ff",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed": "#d7e3ff",
+                      "on-secondary-fixed": "#410006",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#047921",
+                      "inverse-on-surface": "#f3f0ef",
+                      "on-primary": "#ffffff",
+                      "on-secondary-container": "#6d0010",
+                      "error-container": "#ffdad6",
+                      "primary-container": "#0066cc",
+                      "secondary-container": "#ff6b6b",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#94f990",
+                      "on-tertiary-fixed": "#002204",
+                      "surface": "#fcf9f8",
+                      "surface-tint": "#005cba",
+                      "inverse-surface": "#303030",
+                      "tertiary-fixed-dim": "#78dc77",
+                      "on-primary-fixed-variant": "#00458e",
+                      "tertiary": "#005e17",
+                      "on-surface-variant": "#414753",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f6f3f2",
+                      "secondary-fixed-dim": "#ffb3b0",
+                      "surface-bright": "#fcf9f8",
+                      "on-surface": "#1b1c1c",
+                      "on-tertiary-container": "#9aff96",
+                      "background": "#fcf9f8",
+                      "secondary": "#ae2f34",
+                      "surface-container": "#f0eded",
+                      "on-tertiary-fixed-variant": "#005313",
+                      "surface-container-high": "#eae7e7",
+                      "surface-variant": "#e5e2e1",
+                      "outline-variant": "#c1c6d5",
+                      "surface-container-highest": "#e5e2e1",
+                      "inverse-primary": "#aac7ff",
+                      "surface-dim": "#dcd9d9",
+                      "on-error": "#ffffff",
+                      "on-secondary": "#ffffff",
+                      "primary": "#004e9f",
+                      "primary-fixed-dim": "#aac7ff",
+                      "secondary-fixed": "#ffdad8",
+                      "outline": "#727784",
+                      "on-primary-fixed": "#001b3e",
+                      "on-background": "#1b1c1c",
+                      "on-secondary-fixed-variant": "#8c1520"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "lg": "24px",
+                      "container-max": "1280px",
+                      "sm": "8px",
+                      "md": "16px",
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "xl": "40px",
+                      "xs": "4px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "label-sm": ["JetBrains Mono"],
+                      "headline-xl": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-xl-mobile": ["Inter"],
+                      "button": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-background">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-gutter h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">NewsRadar</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-base hover:bg-surface-container-low transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</button>
+<div class="hidden md:flex items-center gap-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant">MODERATOR PORTAL</span>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-xl gap-md">
+<div>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest mb-base block">Quality Assurance</span>
+<h2 class="font-headline-xl text-headline-xl">Content Queue</h2>
+</div>
+<div class="flex flex-wrap items-center gap-base">
+<div class="relative">
+<select class="appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-md py-2 pr-xl font-button text-button text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+<option>All Risk Levels</option>
+<option>Critical Only</option>
+<option>Suspicious</option>
+<option>Low Risk</option>
+</select>
+<span class="material-symbols-outlined absolute right-base top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-low border border-outline-variant rounded-lg px-md py-2 pr-xl font-button text-button text-on-surface focus:outline-none focus:ring-2 focus:ring-primary">
+<option>All Categories</option>
+<option>Geopolitics</option>
+<option>Technology</option>
+<option>Finance</option>
+<option>Science</option>
+</select>
+<span class="material-symbols-outlined absolute right-base top-1/2 -translate-y-1/2 pointer-events-none text-on-surface-variant" data-icon="filter_list">filter_list</span>
+</div>
+</div>
+</div>
+<!-- Bento Layout Grid for Content Moderation -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Sidebar Stats / Secondary Info -->
+<div class="lg:col-span-3 order-2 lg:order-1 flex flex-col gap-gutter">
+<div class="p-md bg-surface-container-lowest border border-outline-variant rounded-xl shadow-sm">
+<p class="font-label-sm text-label-sm text-on-surface-variant mb-xs">PENDING REVIEW</p>
+<h3 class="font-headline-lg text-headline-lg text-primary">128</h3>
+<div class="mt-md w-full bg-surface-variant h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-2/3"></div>
+</div>
+<p class="mt-xs font-label-sm text-label-sm text-on-surface-variant">64% of daily target reached</p>
+</div>
+<div class="p-md bg-secondary-container/10 border border-secondary-container/20 rounded-xl">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="report" style="font-variation-settings: 'FILL' 1;">report</span>
+<p class="font-label-sm text-label-sm text-on-secondary-fixed-variant">URGENT ACTION</p>
+</div>
+<p class="font-body-md text-body-md text-on-secondary-fixed-variant">3 articles flagged for "High Toxicity" require immediate escalation.</p>
+</div>
+<div class="p-md bg-surface-container-lowest border border-outline-variant rounded-xl">
+<h4 class="font-headline-md text-headline-md mb-md">Quick Filter</h4>
+<div class="space-y-sm">
+<label class="flex items-center gap-base cursor-pointer group">
+<input checked="" class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox">
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">AI Hallucinations</span>
+</label>
+<label class="flex items-center gap-base cursor-pointer group">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox">
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">Political Bias</span>
+</label>
+<label class="flex items-center gap-base cursor-pointer group">
+<input class="rounded border-outline-variant text-primary focus:ring-primary" type="checkbox">
+<span class="font-body-md text-body-md text-on-surface-variant group-hover:text-primary transition-colors">Hate Speech</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Main Scrollable Queue -->
+<div class="lg:col-span-9 order-1 lg:order-2 space-y-md">
+<!-- Article Card 1 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row">
+<div class="md:w-64 h-48 md:h-auto overflow-hidden">
+<img alt="Financial data analytics" class="w-full h-full object-cover" data-alt="A clean, high-fidelity close-up of a digital tablet displaying complex financial stock market charts and data visualizations. The lighting is crisp and editorial, reflecting a modern light-mode interface with soft shadows and professional whitespace. The color palette is dominated by corporate blues and clean whites, emphasizing reliability and intelligence. The composition is focused and systematic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIlJSDh7jdQ7EDfm4PlItCvbe2wMBYJSIS-DPv3J91pfwwi649vOIMRQaIZReyXxEUtAmO0cUSfDg6JfSwRkXlF2up3tXP83pGQCgJdUrSViLFEyoZwnWlPNULWDyILc0RYo-tIjIgJAIW8tal2mDsyxXnp8l77SgI7Joz28P7dNUNkGbzRz39RUdUcUAlmKXIdc5EKRJok5mnzhDsg1jTl_UVW0mF1QTRA0ra7IVZvpBEdN_7xzzKjOH6aeU1ryXcheT8mm2yUFs2">
+</div>
+<div class="flex-1 p-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-sm text-label-sm bg-error-container text-on-error-container px-2 py-0.5 rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+                                    Low Credibility
+                                </span>
+<div class="flex items-center gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Quality:</span>
+<span class="font-label-sm text-label-sm font-bold text-secondary">42/100</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs text-on-surface group-hover:text-primary transition-colors">Global Trade Disruptions: Emerging Markets Report 2024</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">The report claims a 40% drop in regional trade routes based on unverified social signals. AI cross-reference shows no supporting data from official harbor logs.</p>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                                    2h ago
+                                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="category">category</span>
+                                    Finance
+                                </span>
+</div>
+<div class="flex gap-base">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg transition-colors" title="Edit Article">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="px-md py-1.5 border border-secondary text-secondary font-button text-button rounded-lg hover:bg-secondary/5 transition-colors active:scale-95" onclick="this.closest('.group').remove()">Reject</button>
+<button class="px-md py-1.5 bg-primary text-on-primary font-button text-button rounded-lg hover:shadow-lg active:scale-95 transition-all" onclick="this.closest('.group').remove()">Approve</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Article Card 2 -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row">
+<div class="md:w-64 h-48 md:h-auto overflow-hidden">
+<img alt="Quantum Computing Research" class="w-full h-full object-cover" data-alt="A macro photograph of an intricate quantum computing processor with glowing gold and copper circuitry under cool, sterile blue lighting. The image captures a sense of futuristic calm intelligence and cutting-edge research. The background is softly blurred, keeping focus on the systematic precision of the technology. High contrast and clean lines maintain the editorial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4iMJMV4W66_NtICLxM_qrCzkTAwV935kY94XvoDaWdfBGRpLTJ7mK5lhBN-HlSNK_bBycY3TxQEuJIvVEY0_jW6fHgdUSPW3YSmMSeHYkL3Ss_R68XpdIDcAlwxf6wbily2cNy3WFcCM2KdHwWz7Bfnur-qt2WSI9v6GRHSPJhgFwyMOkq-2GdkpW136e9nFABVXVqx-oWA5bRq7A5ZBtP1gNM5U-A3I7vMJYYYb6ndaclLUj5eUUaFtuu9EzGMFB1a8f3a522wPf">
+</div>
+<div class="flex-1 p-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-sm text-label-sm bg-tertiary-container/10 text-tertiary-container px-2 py-0.5 rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                                    High Confidence
+                                </span>
+<div class="flex items-center gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Quality:</span>
+<span class="font-label-sm text-label-sm font-bold text-tertiary">96/100</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs text-on-surface group-hover:text-primary transition-colors">Breakthrough in Room-Temperature Superconductors Verified</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">Three independent labs have verified the results of the recent study. Technical details match historical data trajectories for the material science team.</p>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                                    4h ago
+                                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="category">category</span>
+                                    Science
+                                </span>
+</div>
+<div class="flex gap-base">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg transition-colors" title="Edit Article">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="px-md py-1.5 border border-secondary text-secondary font-button text-button rounded-lg hover:bg-secondary/5 transition-colors active:scale-95" onclick="this.closest('.group').remove()">Reject</button>
+<button class="px-md py-1.5 bg-primary text-on-primary font-button text-button rounded-lg hover:shadow-lg active:scale-95 transition-all" onclick="this.closest('.group').remove()">Approve</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Article Card 3 (Text Heavy Variant) -->
+<div class="group bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden hover:shadow-md hover:scale-[1.005] transition-all duration-300 flex flex-col md:flex-row">
+<div class="md:w-64 h-48 md:h-auto overflow-hidden">
+<img alt="Cybersecurity lock" class="w-full h-full object-cover" data-alt="A dark, sophisticated digital artwork of a translucent shield icon floating above a circuit board landscape. Glowing binary code flows through the background like water, in shades of deep indigo and cyan. The scene is illuminated by neon blue accents, creating a high-fidelity, systematic look. The mood is secure, technological, and calm." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDsjs-YwQ2QDH0KvvGCgB-LLcdozFoUshsI4ouB4XYRCtTzLx38xpOj4Imv0_NW98-GFmzdlrKoeIXyAL94Y2161BxW7w-BP9M6miuS55t_Zbb4wHveX_yNNjBNZPOdDzYF3wJRG9MxJ_7qlh7DfL0n5NCL2R2uXzgt3wO_tOW0k6RxvGx4NDk-S-nHaQ_4KzKeOpXQygnXmPyAKfNqJT0HjI2dUA45M22-AFctovsISf4ms5H9LH3GJa32_yGHlzNwjAMleVHZ0I4a">
+</div>
+<div class="flex-1 p-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="error_outline">error_outline</span>
+                                    Nuance Required
+                                </span>
+<div class="flex items-center gap-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Quality:</span>
+<span class="font-label-sm text-label-sm font-bold text-on-surface">68/100</span>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md mb-xs text-on-surface group-hover:text-primary transition-colors">The Ethics of AI in Content Generation: A Review</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">Article displays potential bias towards centralized regulation. Cross-analysis suggests the author has significant ties to regulatory bodies not fully disclosed in the text.</p>
+</div>
+<div class="mt-md flex items-center justify-between">
+<div class="flex items-center gap-md">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span>
+                                    5h ago
+                                </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="category">category</span>
+                                    Technology
+                                </span>
+</div>
+<div class="flex gap-base">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low hover:text-primary rounded-lg transition-colors" title="Edit Article">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="px-md py-1.5 border border-secondary text-secondary font-button text-button rounded-lg hover:bg-secondary/5 transition-colors active:scale-95" onclick="this.closest('.group').remove()">Reject</button>
+<button class="px-md py-1.5 bg-primary text-on-primary font-button text-button rounded-lg hover:shadow-lg active:scale-95 transition-all" onclick="this.closest('.group').remove()">Approve</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More / Empty State -->
+<div class="flex flex-col items-center py-xl border-2 border-dashed border-outline-variant rounded-xl">
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">No more high-priority items in the current queue.</p>
+<button class="px-lg py-md border border-outline-variant text-primary font-button text-button rounded-lg hover:bg-surface-container-low transition-colors">
+                        View Archived Items
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe h-16 bg-surface border-t border-outline-variant shadow-sm md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-3 py-1 active:scale-90 duration-150">
+<span class="material-symbols-outlined" data-icon="schema">schema</span>
+<span class="font-label-sm text-label-sm">Pipeline</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-sm text-label-sm">Saved</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-3 py-1 hover:text-primary transition-all">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</button>
+</nav>
+<!-- Desktop Sidebar Suggestion (Decorative for Desktop Experience) -->
+<div class="hidden md:flex fixed right-gutter bottom-gutter z-50 flex-col gap-base">
+<button class="w-12 h-12 rounded-full bg-primary text-on-primary shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<script>
+        // Simple micro-interaction for action buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

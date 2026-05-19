@@ -1,0 +1,327 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NewsRadar - Home Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-effect {
+            background: rgba(252, 249, 248, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#dfe8ff",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#d7e3ff",
+                        "on-secondary-fixed": "#410006",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#047921",
+                        "inverse-on-surface": "#f3f0ef",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#6d0010",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#0066cc",
+                        "secondary-container": "#ff6b6b",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#94f990",
+                        "on-tertiary-fixed": "#002204",
+                        "surface": "#fcf9f8",
+                        "surface-tint": "#005cba",
+                        "inverse-surface": "#303030",
+                        "tertiary-fixed-dim": "#78dc77",
+                        "on-primary-fixed-variant": "#00458e",
+                        "tertiary": "#005e17",
+                        "on-surface-variant": "#414753",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f6f3f2",
+                        "secondary-fixed-dim": "#ffb3b0",
+                        "surface-bright": "#fcf9f8",
+                        "on-surface": "#1b1c1c",
+                        "on-tertiary-container": "#9aff96",
+                        "background": "#fcf9f8",
+                        "secondary": "#ae2f34",
+                        "surface-container": "#f0eded",
+                        "on-tertiary-fixed-variant": "#005313",
+                        "surface-container-high": "#eae7e7",
+                        "surface-variant": "#e5e2e1",
+                        "outline-variant": "#c1c6d5",
+                        "surface-container-highest": "#e5e2e1",
+                        "inverse-primary": "#aac7ff",
+                        "surface-dim": "#dcd9d9",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "primary": "#004e9f",
+                        "primary-fixed-dim": "#aac7ff",
+                        "secondary-fixed": "#ffdad8",
+                        "outline": "#727784",
+                        "on-primary-fixed": "#001b3e",
+                        "on-background": "#1b1c1c",
+                        "on-secondary-fixed-variant": "#8c1520"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "lg": "24px",
+                        "container-max": "1280px",
+                        "sm": "8px",
+                        "md": "16px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "xl": "40px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "headline-xl": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-xl-mobile": ["Inter"],
+                        "button": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-gutter h-16 bg-surface dark:bg-background border-b border-outline-variant dark:border-outline flat no shadows">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="analytics">analytics</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">NewsRadar</h1>
+</div>
+<div class="flex items-center gap-md">
+<button aria-label="Search" class="p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant" data-icon="search">search</span>
+</button>
+<button aria-label="Notifications" class="p-2 rounded-full hover:bg-surface-container-low dark:hover:bg-surface-container-highest transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-secondary rounded-full border-2 border-surface"></span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile md:px-gutter max-w-container-max mx-auto">
+<!-- Welcome Greeting -->
+<section class="mb-xl">
+<p class="font-label-sm text-label-sm text-primary mb-xs uppercase">Daily Briefing</p>
+<h2 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-on-surface">Hello Alex, here's your morning briefing.</h2>
+</section>
+<!-- Interest Chips -->
+<section class="mb-xl -mx-margin-mobile px-margin-mobile md:mx-0 md:px-0 overflow-x-auto hide-scrollbar flex gap-sm items-center">
+<button class="whitespace-nowrap px-md py-2 bg-primary text-on-primary rounded-full font-button text-button shadow-sm hover:opacity-90 transition-opacity">For You</button>
+<button class="whitespace-nowrap px-md py-2 bg-surface-container text-on-surface-variant rounded-full font-button text-button hover:bg-surface-container-high transition-colors">Quantum Computing</button>
+<button class="whitespace-nowrap px-md py-2 bg-surface-container text-on-surface-variant rounded-full font-button text-button hover:bg-surface-container-high transition-colors">Global Markets</button>
+<button class="whitespace-nowrap px-md py-2 bg-surface-container text-on-surface-variant rounded-full font-button text-button hover:bg-surface-container-high transition-colors">Clean Energy</button>
+<button class="whitespace-nowrap px-md py-2 bg-surface-container text-on-surface-variant rounded-full font-button text-button hover:bg-surface-container-high transition-colors">AI Governance</button>
+<button class="whitespace-nowrap px-md py-2 bg-surface-container text-on-surface-variant rounded-full font-button text-button hover:bg-surface-container-high transition-colors">Space Exploration</button>
+</section>
+<!-- Personalised News Feed (Bento Style Layout) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Featured Card -->
+<article class="md:col-span-8 group bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:scale-[1.005]">
+<div class="aspect-video relative overflow-hidden">
+<img alt="Main feature" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="A cinematic, high-definition wide shot of a futuristic data center illuminated by neon blue and cool white lights. Sleek server racks stretch into the distance, reflecting on a polished black floor. The atmosphere is quiet, technological, and sophisticated, mirroring a corporate modernism aesthetic with high-fidelity detail and a calm, intelligent mood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNPPEfPZQrj4Ae_uu1YKdNBNLP3WHKIcijBUw-B332BtxZGhvxa3SfZOG6PV9_e-cIK9Ml_-VxA2ct6BSTSIuH9H6-6kD8aoEa_w893GMn6HUcMQm6Gfo9nxST4bz6m60XYo4V01dKQNFQp0OEqFZW4MN0uNyHgiR6tngILjIgbOKHvIKzDzY56vJ5K3nSJkkoC_YfmbWw99FSzmmyrNwWIbY3FZnNvKgYNEAxm-jx_5-hg7XuhdLzz9oXURcwIM9_5GMDBkQQKUFN">
+<div class="absolute top-md left-md">
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-3 py-1 rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined text-[14px]" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                            98% Match
+                        </span>
+</div>
+</div>
+<div class="p-lg">
+<div class="flex items-center gap-sm mb-sm">
+<div class="w-6 h-6 rounded-full bg-on-surface-variant/10 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-[16px] text-primary" data-icon="terminal">terminal</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">TechCrunch • 12m ago</span>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface mb-md leading-tight">The Next Decade of Decentralized Intelligence: Why LLMs are moving to the Edge.</h3>
+<p class="text-on-surface-variant line-clamp-2 mb-lg font-body-md">On-device processing is reaching a tipping point as neural engines become standard in consumer hardware, fundamentally shifting the data privacy landscape.</p>
+<div class="flex items-center justify-between">
+<div class="flex gap-md">
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="bookmark">bookmark</span>
+</button>
+<button class="flex items-center gap-xs text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="share">share</span>
+</button>
+</div>
+<button class="text-primary font-button text-button flex items-center gap-xs hover:gap-md transition-all">
+                            Read Full Report <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Side Feed Items -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<!-- Card 2 -->
+<article class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-all group p-md">
+<div class="aspect-video rounded-lg overflow-hidden mb-md relative">
+<img alt="Finance news" class="w-full h-full object-cover" data-alt="A clean, minimalist workspace with a high-end laptop displaying complex financial charts and green line graphs. Soft natural morning light filters through a window, hitting a ceramic cup of coffee. The color palette is composed of soft grays, whites, and vibrant corporate blue accents, conveying a sense of calm intelligence and professional reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzsM7FR48u_xsViW9S3PxH7xNCEdXluKQgifx7aNOGu5ZEV89Z9xuqVc3Ru2HZVdj1dtW9Fk-cptEaNtr882Tj5ARlYs7Ab0B7HHXESMOvzuXJ97JwWcjQbCgpqzAxpzSSVvhRWxcC2Ohf5iuNhHG05iBVG2ueQcsCFgi3-HaxXVQU6H8wRSwpmDBH5jJkT_f89ZYkp2SGm4umbriTvPxp2LFPuKmgybpTAMNciP0hNmguXZCRnVquKbeaJQXDAMficW0S734BFThR">
+<div class="absolute bottom-xs right-xs">
+<span class="bg-surface/90 backdrop-blur-sm text-on-surface font-label-sm text-[10px] px-2 py-0.5 rounded-full">
+                                92% Match
+                            </span>
+</div>
+</div>
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-[14px] text-secondary" data-icon="trending_up">trending_up</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Finance</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs leading-snug line-clamp-2">Market Volatility: New Fed signals suggest a cautious Q3.</h4>
+<span class="font-label-sm text-[11px] text-on-surface-variant">WSJ • 2h ago</span>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface border border-outline-variant rounded-xl overflow-hidden hover:shadow-md transition-all group p-md">
+<div class="aspect-video rounded-lg overflow-hidden mb-md relative">
+<img alt="Cybersecurity" class="w-full h-full object-cover" data-alt="An abstract visualization of digital security, featuring a complex grid of glowing nodes and interconnected lines in deep sapphire and electric cyan. The lighting is low-key, focusing on the sharp luminescence of the data points. The aesthetic is extremely high-fidelity, editorial, and systematic, suggesting cutting-edge technology and cryptographic precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRtInh6bhaoVc93_z0hi_ADceHD2_6SIiqXJuWITI0nMaQg0OQ_pAKrx-eGdtkQqDzKOuvggmjXzpw7srI5PVomVGr8K4Cn_M2jiZ6p5RP5cqySsVmfr_G680excTg4n64VHmLyCk3-hJLlounieuz_uUbzvBQFsp8hhImbzuiD385ozTD6obtDcOKnAy4o4xKh2yXd5cqge54LsnwHihJkCzCvh0Y8dClGsy4ckDRgHR2KT7lbpOBxK6LWsmri0KT8QdNH1SzM7G3">
+<div class="absolute bottom-xs right-xs">
+<span class="bg-surface/90 backdrop-blur-sm text-on-surface font-label-sm text-[10px] px-2 py-0.5 rounded-full">
+                                85% Match
+                            </span>
+</div>
+</div>
+<div class="flex items-center gap-sm mb-xs">
+<span class="material-symbols-outlined text-[14px] text-tertiary" data-icon="shield">shield</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Security</span>
+</div>
+<h4 class="font-headline-md text-headline-md text-on-surface mb-xs leading-snug line-clamp-2">Quantum-Resistant Encryption becomes a federal priority.</h4>
+<span class="font-label-sm text-[11px] text-on-surface-variant">The Verge • 4h ago</span>
+</article>
+</div>
+</div>
+<!-- Secondary Feed Section -->
+<section class="mt-xl">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Recommended Pipelines</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Pipeline Item 1 -->
+<div class="flex items-center p-md bg-surface border-l-4 border-primary rounded-lg border-y border-r border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="mr-md p-2 bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="schema">schema</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">PR-204</p>
+<h5 class="font-headline-md text-[16px] text-on-surface">Auto-Digest: Semiconductor Shortage</h5>
+</div>
+</div>
+<!-- Pipeline Item 2 -->
+<div class="flex items-center p-md bg-surface border-l-4 border-tertiary rounded-lg border-y border-r border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="mr-md p-2 bg-tertiary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" data-icon="verified">verified</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">PR-205</p>
+<h5 class="font-headline-md text-[16px] text-on-surface">Weekly Sentiment: ESG Compliance</h5>
+</div>
+</div>
+<!-- Pipeline Item 3 -->
+<div class="flex items-center p-md bg-surface border-l-4 border-outline rounded-lg border-y border-r border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="mr-md p-2 bg-surface-container rounded-lg">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="hourglass_empty">hourglass_empty</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">PR-206</p>
+<h5 class="font-headline-md text-[16px] text-on-surface">Scheduled: EU AI Act Analysis</h5>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Chatbot FAB -->
+<button class="fixed bottom-24 right-6 md:right-10 w-16 h-16 bg-primary text-on-primary rounded-full shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all flex items-center justify-center z-40 group relative overflow-visible">
+    <div class="absolute inset-0 rounded-full bg-primary animate-ping opacity-20"></div>
+    <span class="material-symbols-outlined text-[32px] relative z-10 group-hover:scale-110 transition-transform" data-icon="chat_bubble">chat_bubble</span>
+    <div class="absolute -top-1 -right-1 w-4 h-4 bg-secondary rounded-full border-2 border-surface relative z-20"></div>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-base pb-safe h-16 bg-surface dark:bg-background border-t border-outline-variant dark:border-outline shadow-sm">
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-xl px-3 py-1 Active: transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all Active: transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all Active: transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="schema">schema</span>
+<span class="font-label-sm text-label-sm">Pipeline</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all Active: transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
+<span class="font-label-sm text-label-sm">Saved</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-3 py-1 hover:text-primary dark:hover:text-primary-fixed transition-all Active: transform scale-90 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for interest chips
+        const chips = document.querySelectorAll('section button');
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => {
+                    c.classList.remove('bg-primary', 'text-on-primary');
+                    c.classList.add('bg-surface-container', 'text-on-surface-variant');
+                });
+                chip.classList.remove('bg-surface-container', 'text-on-surface-variant');
+                chip.classList.add('bg-primary', 'text-on-primary');
+            });
+        });
+
+        // Simple scroll appearance for TopAppBar
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('flat');
+            } else {
+                header.classList.remove('shadow-md');
+                header.classList.add('flat');
+            }
+        });
+    </script>
+
+
+</body></html>
