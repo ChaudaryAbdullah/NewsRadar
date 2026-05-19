@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/theme.dart';
-import 'features/feed/screens/feed_screen.dart';
+import 'features/auth/screens/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class NewsRadarApp extends StatelessWidget {
       title: 'NewsRadar',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const FeedScreen(),
+      home: const LoginScreen(),
     );
   }
 }

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../shared/models/models.dart';
+import '../../../shared/models/user.dart';
 import '../../../shared/services/api_service.dart';
 import '../../../shared/widgets/badges.dart';
 import '../../../core/theme.dart';
 import '../../analysis/screens/analysis_screen.dart';
+import '../../auth/screens/login_screen.dart';
 import '../widgets/article_card.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -107,6 +109,7 @@ class _FeedScreenState extends State<FeedScreen>
   }
 
   Widget _buildHeader() {
+    final user = AuthService().currentUser;
     return Container(
       padding: EdgeInsets.fromLTRB(16, MediaQuery.of(context).padding.top + 12, 16, 0),
       child: Row(
@@ -117,7 +120,7 @@ class _FeedScreenState extends State<FeedScreen>
               gradient: const LinearGradient(colors: [AppColors.accent, AppColors.accentDeep]),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.radar_rounded, color: AppColors.primary, size: 20),
+            child: const Icon(Icons.radar_rounded, color: Colors.white, size: 20),
           ),
           const SizedBox(width: 10),
           Column(
@@ -129,6 +132,7 @@ class _FeedScreenState extends State<FeedScreen>
             ],
           ),
           const Spacer(),
+          // LIVE badge
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
@@ -144,6 +148,65 @@ class _FeedScreenState extends State<FeedScreen>
               Text('LIVE', style: GoogleFonts.inter(fontSize: 10, color: AppColors.badgeGreen, fontWeight: FontWeight.w700, letterSpacing: 1)),
             ]),
           ),
+          const SizedBox(width: 10),
+          // User avatar + logout popup
+          if (user != null)
+            PopupMenuButton<String>(
+              offset: const Offset(0, 44),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              color: AppColors.surface,
+              onSelected: (v) {
+                if (v == 'logout') {
+                  AuthService().logout();
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => const LoginScreen(),
+                      transitionsBuilder: (_, anim, __, child) =>
+                          FadeTransition(opacity: anim, child: child),
+                      transitionDuration: const Duration(milliseconds: 300),
+                    ),
+                  );
+                }
+              },
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  enabled: false,
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(user.name, style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
+                    Text(user.email, style: GoogleFonts.inter(fontSize: 11, color: AppColors.textMuted)),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Color(user.role.colorValue).withOpacity(0.15),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(color: Color(user.role.colorValue).withOpacity(0.4)),
+                      ),
+                      child: Text(user.role.label,
+                        style: GoogleFonts.jetBrainsMono(fontSize: 10, color: Color(user.role.colorValue), fontWeight: FontWeight.w700)),
+                    ),
+                  ]),
+                ),
+                const PopupMenuDivider(),
+                PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Row(children: [
+                    const Icon(Icons.logout_rounded, size: 16, color: AppColors.badgeRed),
+                    const SizedBox(width: 10),
+                    Text('Sign out', style: GoogleFonts.inter(fontSize: 13, color: AppColors.badgeRed, fontWeight: FontWeight.w600)),
+                  ]),
+                ),
+              ],
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor: Color(user.role.colorValue).withOpacity(0.2),
+                child: Text(
+                  user.avatarInitials,
+                  style: GoogleFonts.inter(fontSize: 12, fontWeight: FontWeight.w700, color: Color(user.role.colorValue)),
+                ),
+              ),
+            ),
         ],
       ),
     );
