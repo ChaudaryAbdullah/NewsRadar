@@ -1,8 +1,8 @@
 class AppConstants {
-  // ── Backend URL (change to your LAN IP or deployed URL for device testing)
-  static const String baseUrl =
-      'http://localhost:8000'; // Android emulator → localhost
-  // static const String baseUrl = 'http://192.168.x.x:8000'; // Real device on same WiFi
+  // ── Backend URL ─────────────────────────────────────────────────────────────
+  // static const String baseUrl = 'http://localhost:8000';       // Windows desktop only
+  // static const String baseUrl = 'http://10.0.2.2:8000';       // Android emulator only
+  static const String baseUrl = 'http://172.15.75.109:8000';     // ← Physical phone (same WiFi)
 
   static const String apiV1 = '$baseUrl/api/v1';
 
