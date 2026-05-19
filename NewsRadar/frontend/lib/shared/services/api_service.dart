@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/models.dart';
+import '../models/user.dart';
 import '../../core/constants.dart';
 
 class ApiService {
@@ -9,6 +10,14 @@ class ApiService {
   ApiService._internal();
 
   final _client = http.Client();
+
+  Map<String, String> get _authHeaders {
+    final token = AuthService().token;
+    return {
+      'Content-Type': 'application/json',
+      if (token != null) 'Authorization': 'Bearer $token',
+    };
+  }
 
   // ── Articles ────────────────────────────────────────────────────────────────
 
@@ -27,7 +36,7 @@ class ApiService {
       },
     );
     final resp = await _client
-        .get(uri)
+        .get(uri, headers: _authHeaders)
         .timeout(AppConstants.requestTimeout);
     _check(resp);
     final data = jsonDecode(resp.body) as Map<String, dynamic>;
@@ -41,7 +50,7 @@ class ApiService {
       queryParameters: {'q': query, 'page': page.toString()},
     );
     final resp = await _client
-        .get(uri)
+        .get(uri, headers: _authHeaders)
         .timeout(AppConstants.requestTimeout);
     _check(resp);
     final data = jsonDecode(resp.body) as Map<String, dynamic>;
@@ -52,7 +61,7 @@ class ApiService {
 
   Future<List<String>> getCategories() async {
     final resp = await _client
-        .get(Uri.parse(AppConstants.categoriesEndpoint))
+        .get(Uri.parse(AppConstants.categoriesEndpoint), headers: _authHeaders)
         .timeout(AppConstants.requestTimeout);
     _check(resp);
     final data = jsonDecode(resp.body) as Map<String, dynamic>;
@@ -65,7 +74,7 @@ class ApiService {
     final resp = await _client
         .post(
           Uri.parse(AppConstants.analyzeEndpoint),
-          headers: {'Content-Type': 'application/json'},
+          headers: _authHeaders,
           body: jsonEncode(article.toJson()),
         )
         .timeout(AppConstants.analysisTimeout);
@@ -92,7 +101,7 @@ class ApiService {
     final resp = await _client
         .post(
           Uri.parse(AppConstants.simulateEndpoint),
-          headers: {'Content-Type': 'application/json'},
+          headers: _authHeaders,
           body: jsonEncode(body),
         )
         .timeout(AppConstants.requestTimeout);
@@ -101,9 +110,41 @@ class ApiService {
         jsonDecode(resp.body) as Map<String, dynamic>);
   }
 
+  Future<SimulationResult> executeAction({
+    required Article article,
+    required EvaluationResult evaluation,
+    required RecommendedAction action,
+  }) async {
+    final body = {
+      'article_id': article.id,
+      'article': article.toJson(),
+      'action_type': action.type,
+      'action_title': action.title,
+      'risk_level': evaluation.riskLevel,
+    };
+    final resp = await _client
+        .post(
+          Uri.parse(AppConstants.executeActionEndpoint),
+          headers: _authHeaders,
+          body: jsonEncode(body),
+        )
+        .timeout(AppConstants.requestTimeout);
+    _check(resp);
+    final data = jsonDecode(resp.body) as Map<String, dynamic>;
+    
+    return SimulationResult(
+      actionType: data['action_type'] ?? action.type,
+      beforeState: ArticleState.fromJson(data['before_state'] ?? {}),
+      afterState: ArticleState.fromJson(data['after_state'] ?? {}),
+      executionLog: ['Initiating action execution...', 'Status: ${data['status']}'],
+      impactSummary: data['error'] ?? 'Action successfully executed in production state.',
+      durationMs: 0,
+    );
+  }
+
   Future<Map<String, dynamic>> getTraces() async {
     final resp = await _client
-        .get(Uri.parse(AppConstants.tracesEndpoint))
+        .get(Uri.parse(AppConstants.tracesEndpoint), headers: _authHeaders)
         .timeout(AppConstants.requestTimeout);
     _check(resp);
     return jsonDecode(resp.body) as Map<String, dynamic>;
@@ -112,7 +153,7 @@ class ApiService {
   Future<bool> checkHealth() async {
     try {
       final resp = await _client
-          .get(Uri.parse(AppConstants.healthEndpoint))
+          .get(Uri.parse(AppConstants.healthEndpoint), headers: _authHeaders)
           .timeout(const Duration(seconds: 5));
       return resp.statusCode == 200;
     } catch (_) {
@@ -144,7 +185,7 @@ class ApiService {
     final resp = await _client
         .post(
           Uri.parse(AppConstants.chatAskEndpoint),
-          headers: {'Content-Type': 'application/json'},
+          headers: _authHeaders,
           body: jsonEncode(body),
         )
         .timeout(const Duration(seconds: 60));

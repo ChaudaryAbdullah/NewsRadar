@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../services/auth_api_service.dart';
+
 // ─── User Roles ───────────────────────────────────────────────────────────────
 
 enum UserRole { consumer, journalist, editor, admin, auditor }
@@ -48,6 +52,16 @@ extension UserRoleExt on UserRole {
   bool get canViewAudit        => this == UserRole.admin || this == UserRole.auditor;
   bool get canOverrideVerdicts => index >= UserRole.editor.index;
   bool get requiresApproval    => index >= UserRole.journalist.index;
+
+  static UserRole fromString(String s) {
+    switch (s.toLowerCase()) {
+      case 'admin':      return UserRole.admin;
+      case 'editor':     return UserRole.editor;
+      case 'journalist': return UserRole.journalist;
+      case 'auditor':    return UserRole.auditor;
+      default:           return UserRole.consumer;
+    }
+  }
 }
 
 // ─── App User ─────────────────────────────────────────────────────────────────
@@ -58,6 +72,7 @@ class AppUser {
   final String email;
   final UserRole role;
   final String avatarInitials;
+  final String status;
 
   const AppUser({
     required this.id,
@@ -65,10 +80,23 @@ class AppUser {
     required this.email,
     required this.role,
     required this.avatarInitials,
+    this.status = 'active',
   });
+
+  factory AppUser.fromJson(Map<String, dynamic> j) => AppUser(
+    id:             j['id'] as String,
+    name:           j['name'] as String,
+    email:          j['email'] as String,
+    role:           UserRoleExt.fromString(j['role'] as String),
+    avatarInitials: j['initials'] as String? ??
+        (j['name'] as String).split(' ').take(2).map((w) => w[0].toUpperCase()).join(),
+    status:         j['status'] as String? ?? 'active',
+  );
 }
 
-// ─── Auth Service ─────────────────────────────────────────────────────────────
+// ─── AuthService — real API-backed ────────────────────────────────────────────
+// The actual HTTP implementation lives in AuthApiService (auth_api_service.dart).
+// This class remains the singleton interface used by the rest of the app.
 
 class AuthService {
   static final AuthService _instance = AuthService._internal();
@@ -76,113 +104,81 @@ class AuthService {
   AuthService._internal();
 
   AppUser? _currentUser;
+  String?  _token;
+
   AppUser? get currentUser => _currentUser;
-  bool get isLoggedIn => _currentUser != null;
+  String?  get token       => _token;
+  bool     get isLoggedIn  => _currentUser != null && _token != null;
 
-  // ── Pre-seeded demo credentials ────────────────────────────────────────────
-  final List<_UserCredential> _users = [
-    const _UserCredential(id: 'usr-001', name: 'Admin User',     email: 'admin@newsradar.com',      password: 'admin123',  role: UserRole.admin,      initials: 'AU'),
-    const _UserCredential(id: 'usr-002', name: 'Editor Jane',    email: 'editor@newsradar.com',     password: 'editor123', role: UserRole.editor,     initials: 'EJ'),
-    const _UserCredential(id: 'usr-003', name: 'John Reporter',  email: 'journalist@newsradar.com', password: 'press123',  role: UserRole.journalist, initials: 'JR'),
-    const _UserCredential(id: 'usr-004', name: 'Regular User',   email: 'user@newsradar.com',       password: 'user123',   role: UserRole.consumer,   initials: 'RU'),
-    const _UserCredential(id: 'usr-005', name: 'Audit Smith',    email: 'auditor@newsradar.com',    password: 'audit123',  role: UserRole.auditor,    initials: 'AS'),
-  ];
-
-  int _nextId = 6;
-
-  /// Login — returns null on success, error string on failure.
-  String? login(String email, String password) {
-    if (email.trim().isEmpty) return 'Email is required';
-    if (password.isEmpty)     return 'Password is required';
-
-    final match = _users.where(
-      (u) => u.email.toLowerCase() == email.trim().toLowerCase()
-          && u.password == password,
-    ).firstOrNull;
-
-    if (match == null) return 'Invalid email or password';
-
-    _currentUser = AppUser(
-      id: match.id, name: match.name,
-      email: match.email, role: match.role,
-      avatarInitials: match.initials,
-    );
-    return null;
+  // ── Restore session from shared_preferences ──────────────────────────────
+  Future<bool> tryAutoLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedToken = prefs.getString('auth_token');
+    if (savedToken == null) return false;
+    try {
+      final user = await AuthApiService().fetchMe(savedToken);
+      _token = savedToken;
+      _currentUser = user;
+      return true;
+    } catch (_) {
+      await prefs.remove('auth_token');
+      return false;
+    }
   }
 
-  /// Register — returns null on success, error string on failure.
-  /// New users always get CONSUMER role (upgrade requires admin approval).
-  String? register({
+  // ── Login ────────────────────────────────────────────────────────────────
+  /// Returns null on success, error string on failure.
+  Future<String?> loginAsync(String email, String password) async {
+    try {
+      final result = await AuthApiService().login(email.trim(), password);
+      _token = result['access_token'] as String;
+      _currentUser = AppUser.fromJson(result['user'] as Map<String, dynamic>);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('auth_token', _token!);
+      return null;
+    } catch (e) {
+      return e.toString().replaceFirst('Exception: ', '');
+    }
+  }
+
+  // ── Register ─────────────────────────────────────────────────────────────
+  Future<String?> registerAsync({
     required String fullName,
     required String email,
     required String password,
     required UserRole selectedRole,
-  }) {
-    if (fullName.trim().isEmpty) return 'Full name is required';
-    if (email.trim().isEmpty)    return 'Email is required';
-    if (!email.contains('@'))    return 'Enter a valid email';
-    if (password.length < 6)     return 'Password must be at least 6 characters';
-
-    final exists = _users.any(
-      (u) => u.email.toLowerCase() == email.trim().toLowerCase(),
-    );
-    if (exists) return 'An account with this email already exists';
-
-    final initials = fullName.trim().split(' ')
-        .take(2).map((w) => w[0].toUpperCase()).join();
-
-    final id = 'usr-${_nextId.toString().padLeft(3, '0')}';
-    _nextId++;
-
-    // Elevated roles need approval — registered as CONSUMER for now
-    final actualRole = selectedRole.requiresApproval
-        ? UserRole.consumer
-        : selectedRole;
-
-    _users.add(_UserCredential(
-      id: id,
-      name: fullName.trim(),
-      email: email.trim().toLowerCase(),
-      password: password,
-      role: actualRole,
-      initials: initials.isEmpty ? '?' : initials,
-    ));
-
-    // Auto-login after register
-    _currentUser = AppUser(
-      id: id, name: fullName.trim(),
-      email: email.trim().toLowerCase(),
-      role: actualRole,
-      avatarInitials: initials.isEmpty ? '?' : initials,
-    );
-
-    return null;
+  }) async {
+    try {
+      final result = await AuthApiService().register(
+        fullName: fullName.trim(),
+        email: email.trim(),
+        password: password,
+        role: selectedRole.displayName.toLowerCase(),
+      );
+      _token = result['access_token'] as String;
+      _currentUser = AppUser.fromJson(result['user'] as Map<String, dynamic>);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('auth_token', _token!);
+      return null;
+    } catch (e) {
+      return e.toString().replaceFirst('Exception: ', '');
+    }
   }
 
+  // ── Logout ───────────────────────────────────────────────────────────────
+  Future<void> logout() async {
+    _currentUser = null;
+    _token = null;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('auth_token');
+  }
+
+  // ── Note shown after register if role was downgraded ────────────────────
   String? get registerNote {
     final role = _currentUser?.role;
     if (role == null) return null;
     return role.requiresApproval
-        ? 'Note: Elevated role requires admin approval. You have been registered as CONSUMER.'
+        ? 'Note: Elevated role requires admin approval. You have been registered as Consumer.'
         : null;
   }
-
-  void logout() => _currentUser = null;
-}
-
-// ─── Internal record ──────────────────────────────────────────────────────────
-
-class _UserCredential {
-  final String id;
-  final String name;
-  final String email;
-  final String password;
-  final UserRole role;
-  final String initials;
-
-  const _UserCredential({
-    required this.id, required this.name,
-    required this.email, required this.password,
-    required this.role, required this.initials,
-  });
 }

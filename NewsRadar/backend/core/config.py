@@ -26,6 +26,28 @@ class Settings:
     GROQ_TEMPERATURE: float = 0.3
     GROQ_MAX_TOKENS: int = 2048
 
+    # JWT
+    JWT_SECRET: str = os.getenv("JWT_SECRET", "change-me-in-production")
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRE_MINUTES: int = int(os.getenv("JWT_EXPIRE_MINUTES", "10080"))
+
+    # Email Configuration
+    SENDGRID_API_KEY: str = os.getenv("SENDGRID_API_KEY", "")
+    SENDGRID_FROM_EMAIL: str = os.getenv("SENDGRID_FROM_EMAIL", "noreply@newsradar.com")
+    SENDGRID_FROM_NAME: str = os.getenv("SENDGRID_FROM_NAME", "NewsRadar")
+
+    # SMTP Configuration (Fallback)
+    SMTP_HOST: str = os.getenv("SMTP_HOST", "smtp.gmail.com")
+    SMTP_PORT: int = int(os.getenv("SMTP_PORT", "587"))
+    SMTP_USER: str = os.getenv("SMTP_USER", "")
+    SMTP_PASSWORD: str = os.getenv("SMTP_PASSWORD", "")
+
+    # App Settings
+    APP_URL: str = os.getenv("APP_URL", "http://localhost:3000")
+    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL", "admin@newsradar.com")
+    DEFAULT_INVITE_EXPIRES_HOURS: int = int(os.getenv("DEFAULT_INVITE_EXPIRES_HOURS", "72"))
+    DEFAULT_PASSWORD_RESET_EXPIRES_MINUTES: int = int(os.getenv("DEFAULT_PASSWORD_RESET_EXPIRES_MINUTES", "60"))
+
     # Source reliability known scores (used in evaluation)
     KNOWN_RELIABLE_SOURCES: dict = {
         "bbc-news": 0.95,
@@ -43,6 +65,10 @@ class Settings:
     }
 
     DEFAULT_RELIABILITY: float = 0.55
+
+    # MFA
+    MFA_ISSUER: str = "NewsRadar"
+    MFA_ENABLED_BY_DEFAULT: bool = False
 
 
 settings = Settings()

@@ -4,7 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../shared/models/user.dart';
 import '../../../core/theme.dart';
-import '../../feed/screens/feed_screen.dart';
+import '../../dashboard/screens/role_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -42,10 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() { _loading = true; _errorMsg = null; });
 
-    // Simulate a short network delay for realism
-    await Future.delayed(const Duration(milliseconds: 600));
-
-    final err = _auth.login(_emailCtrl.text, _passCtrl.text);
+    final err = await _auth.loginAsync(_emailCtrl.text, _passCtrl.text);
 
     if (!mounted) return;
 
@@ -56,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         PageRouteBuilder(
-          pageBuilder: (_, __, ___) => const FeedScreen(),
+          pageBuilder: (_, __, ___) => const RoleRouter(),
           transitionsBuilder: (_, anim, __, child) =>
               FadeTransition(opacity: anim, child: child),
           transitionDuration: const Duration(milliseconds: 400),

@@ -24,6 +24,7 @@ class VerdictStatus(str, Enum):
     VERIFIED = "VERIFIED"
     DISPUTED = "DISPUTED"
     PENDING = "PENDING"
+    MISINFORMATION = "MISINFORMATION"
 
 
 class ActionType(str, Enum):
@@ -32,6 +33,9 @@ class ActionType(str, Enum):
     FLAG_MISINFORMATION = "FLAG_MISINFORMATION"
     SHARE_WITH_EDITOR = "SHARE_WITH_EDITOR"
     ARCHIVE = "ARCHIVE"
+    QUARANTINE = "QUARANTINE"
+    AMPLIFY = "AMPLIFY"
+    REQUEST_COMMENT = "REQUEST_COMMENT"
 
 
 class ReliabilityBadge(str, Enum):

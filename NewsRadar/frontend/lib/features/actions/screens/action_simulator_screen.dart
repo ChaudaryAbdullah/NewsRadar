@@ -37,13 +37,13 @@ class _ActionSimulatorScreenState extends State<ActionSimulatorScreen> {
     'ARCHIVE': Icons.archive_rounded,
   };
 
-  Future<void> _simulate(RecommendedAction action) async {
+  Future<void> _execute(RecommendedAction action) async {
     setState(() { _simulating = true; _error = null; _selectedActionId = action.id; _simulation = null; });
     try {
-      final result = await _api.simulateAction(
+      final result = await _api.executeAction(
         article: widget.analysis.article,
         evaluation: widget.analysis.evaluation,
-        actionType: action.type,
+        action: action,
       );
       setState(() { _simulation = result; _simulating = false; });
     } catch (e) {
@@ -68,7 +68,7 @@ class _ActionSimulatorScreenState extends State<ActionSimulatorScreen> {
           const SizedBox(height: 16),
           Text('AI-Generated Actions', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w700, color: AppColors.textPrimary)),
           const SizedBox(height: 4),
-          Text('Tap an action to simulate its execution', style: GoogleFonts.inter(fontSize: 12, color: AppColors.textMuted)),
+          Text('Tap an action to execute it', style: GoogleFonts.inter(fontSize: 12, color: AppColors.textMuted)),
           const SizedBox(height: 12),
           // Action cards
           ...widget.analysis.recommendedActions.asMap().entries.map((e) =>
@@ -79,7 +79,7 @@ class _ActionSimulatorScreenState extends State<ActionSimulatorScreen> {
               icon: _actionIcons[e.value.type] ?? Icons.bolt_rounded,
               isSelected: _selectedActionId == e.value.id,
               isSimulating: _simulating && _selectedActionId == e.value.id,
-              onTap: () => _simulate(e.value),
+              onTap: () => _execute(e.value),
             ),
           ),
           const SizedBox(height: 20),
@@ -201,9 +201,9 @@ class _SimulatingLoader extends StatelessWidget {
       child: Column(children: [
         const CircularProgressIndicator(color: AppColors.accent, strokeWidth: 2),
         const SizedBox(height: 16),
-        Text('Simulating action...', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+        Text('Executing action...', style: GoogleFonts.inter(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
         const SizedBox(height: 4),
-        Text('Executing pipeline and computing state changes', style: GoogleFonts.inter(fontSize: 12, color: AppColors.textMuted), textAlign: TextAlign.center),
+        Text('Applying real database changes and tracing impact', style: GoogleFonts.inter(fontSize: 12, color: AppColors.textMuted), textAlign: TextAlign.center),
       ]),
     ).animate().fadeIn(duration: 300.ms);
   }
@@ -233,7 +233,7 @@ class _SimulationResultCard extends StatelessWidget {
           child: Row(children: [
             const Icon(Icons.check_circle_rounded, color: AppColors.accent, size: 18),
             const SizedBox(width: 8),
-            Text('SIMULATION COMPLETE', style: GoogleFonts.inter(fontSize: 11, color: AppColors.accent, fontWeight: FontWeight.w700, letterSpacing: 1)),
+            Text('EXECUTION COMPLETE', style: GoogleFonts.inter(fontSize: 11, color: AppColors.accent, fontWeight: FontWeight.w700, letterSpacing: 1)),
             const Spacer(),
             Text('${result.durationMs}ms', style: GoogleFonts.inter(fontSize: 11, color: AppColors.textMuted)),
           ]),

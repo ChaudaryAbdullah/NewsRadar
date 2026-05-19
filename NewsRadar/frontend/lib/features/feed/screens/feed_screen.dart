@@ -151,7 +151,7 @@ class _FeedScreenState extends State<FeedScreen>
           ),
           const SizedBox(width: 10),
           // User avatar + logout popup
-          if (user != null)
+          if (user != null) ...[
             PopupMenuButton<String>(
               offset: const Offset(0, 44),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -185,15 +185,6 @@ class _FeedScreenState extends State<FeedScreen>
                     ),
                   ]),
                 ),
-                const PopupMenuDivider(),
-                PopupMenuItem<String>(
-                  value: 'logout',
-                  child: Row(children: [
-                    const Icon(Icons.logout_rounded, size: 16, color: AppColors.badgeRed),
-                    const SizedBox(width: 10),
-                    Text('Sign out', style: GoogleFonts.inter(fontSize: 13, color: AppColors.badgeRed, fontWeight: FontWeight.w600)),
-                  ]),
-                ),
               ],
               child: CircleAvatar(
                 radius: 18,
@@ -204,6 +195,20 @@ class _FeedScreenState extends State<FeedScreen>
                 ),
               ),
             ),
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.logout_rounded, color: AppColors.badgeRed, size: 22),
+              tooltip: 'Sign out',
+              onPressed: () {
+                AuthService().logout();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AuthScreen()),
+                  (_) => false,
+                );
+              },
+            ),
+          ]
         ],
       ),
     );

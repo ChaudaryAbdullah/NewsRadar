@@ -119,8 +119,7 @@ class _LoginFormState extends State<_LoginForm> {
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() { _loading = true; _error = null; });
-    await Future.delayed(const Duration(milliseconds: 500));
-    final err = AuthService().login(_emailCtrl.text, _passCtrl.text);
+    final err = await AuthService().loginAsync(_emailCtrl.text, _passCtrl.text);
     if (!mounted) return;
     if (err != null) {
       setState(() { _error = err; _loading = false; });
@@ -199,8 +198,7 @@ class _SignupFormState extends State<_SignupForm> {
     if (!_formKey.currentState!.validate()) return;
     if (!_gdprConsent) { setState(() => _error = 'You must accept the privacy policy'); return; }
     setState(() { _loading = true; _error = null; });
-    await Future.delayed(const Duration(milliseconds: 600));
-    final err = AuthService().register(
+    final err = await AuthService().registerAsync(
       fullName: _nameCtrl.text, email: _emailCtrl.text,
       password: _passCtrl.text, selectedRole: _selectedRole,
     );
@@ -208,6 +206,11 @@ class _SignupFormState extends State<_SignupForm> {
     if (err != null) {
       setState(() { _error = err; _loading = false; });
     } else {
+      final note = AuthService().registerNote;
+      if (note != null && context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(note), duration: const Duration(seconds: 5)));
+      }
       Navigator.pushReplacement(context,
         MaterialPageRoute(builder: (_) => const RoleRouter()));
     }

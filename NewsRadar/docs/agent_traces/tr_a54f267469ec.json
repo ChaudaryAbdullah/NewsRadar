@@ -1,0 +1,37 @@
+{
+  "trace_id": "tr_a54f267469ec",
+  "article_id": "f82b2957e5417c90",
+  "article_title": "Live Updates: Iran war \"re-escalation risks,\" new Trump threat keep oil prices high as diplomacy staggers on - CBS News",
+  "timestamp": "2026-05-19T18:07:05.120902+00:00",
+  "total_duration_ms": 3542,
+  "steps": [
+    {
+      "step": "INGEST",
+      "duration_ms": 0,
+      "tokens_used": null,
+      "status": "SUCCESS",
+      "output_summary": "Article body prepared (214 chars). Source: CBS News"
+    },
+    {
+      "step": "EXTRACT_INSIGHTS",
+      "duration_ms": 1256,
+      "tokens_used": 626,
+      "status": "SUCCESS",
+      "output_summary": "Extracted 3 claims, 3 entities, sentiment=NEGATIVE"
+    },
+    {
+      "step": "EVALUATE_IMPLICATIONS",
+      "duration_ms": 829,
+      "tokens_used": 494,
+      "status": "SUCCESS",
+      "output_summary": "Risk=MEDIUM, Misinfo prob=0%, Source reliability=55%"
+    },
+    {
+      "step": "GENERATE_ACTIONS",
+      "duration_ms": 1456,
+      "tokens_used": 746,
+      "status": "SUCCESS",
+      "output_summary": "Generated 3 recommended actions"
+    }
+  ]
+}
