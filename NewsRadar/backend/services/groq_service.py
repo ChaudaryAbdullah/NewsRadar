@@ -41,3 +41,38 @@ async def generate_json(prompt: str) -> tuple[dict | list, int]:
     text, tokens = await generate(prompt)
     parsed = _parse_json(text)
     return parsed, tokens
+
+
+async def chat(messages: list[dict]) -> str:
+    """
+    Multi-turn chat completion. `messages` is the full conversation list
+    including system prompt, prior turns, and the latest user message.
+    Returns the assistant reply string.
+    """
+    client = _get_client()
+    response = await client.chat.completions.create(
+        model=settings.GROQ_MODEL,
+        messages=messages,
+        temperature=0.5,
+        max_tokens=1024,
+    )
+    return response.choices[0].message.content.strip()
+
+
+async def stream_chat(messages: list[dict]):
+    """
+    Async generator that yields text chunks from a streaming Groq response.
+    Used for SSE endpoint.
+    """
+    client = _get_client()
+    stream = await client.chat.completions.create(
+        model=settings.GROQ_MODEL,
+        messages=messages,
+        temperature=0.5,
+        max_tokens=1024,
+        stream=True,
+    )
+    async for chunk in stream:
+        delta = chunk.choices[0].delta.content
+        if delta:
+            yield delta

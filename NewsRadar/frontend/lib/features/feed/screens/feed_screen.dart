@@ -7,6 +7,7 @@ import '../../../shared/services/api_service.dart';
 import '../../../shared/widgets/badges.dart';
 import '../../../core/theme.dart';
 import '../../analysis/screens/analysis_screen.dart';
+import '../../articles/screens/article_detail_screen.dart';
 import '../../auth/screens/auth_screen.dart';
 import '../widgets/article_card.dart';
 
@@ -78,7 +79,7 @@ class _FeedScreenState extends State<FeedScreen>
 
   void _openArticle(Article article) {
     Navigator.push(context,
-      MaterialPageRoute(builder: (_) => AnalysisScreen(article: article)));
+      MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: article)));
   }
 
   @override
@@ -311,7 +312,7 @@ class _FeedBodyContentState extends State<FeedBodyContent> {
         itemCount: _articles.length,
         itemBuilder: (_, i) => ArticleCard(
           article: _articles[i], index: i,
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AnalysisScreen(article: _articles[i])))),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleDetailScreen(article: _articles[i])))),
       ),
     );
   }

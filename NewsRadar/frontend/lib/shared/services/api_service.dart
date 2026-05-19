@@ -128,4 +128,27 @@ class ApiService {
       throw Exception(body['detail'] ?? 'Request failed: ${resp.statusCode}');
     }
   }
+
+  // ── Chat ─────────────────────────────────────────────────────────────────────
+
+  Future<Map<String, dynamic>> sendChatMessage({
+    required String message,
+    required String sessionId,
+    Map<String, dynamic>? articleContext,
+  }) async {
+    final body = {
+      'message': message,
+      'session_id': sessionId,
+      if (articleContext != null) 'article_context': articleContext,
+    };
+    final resp = await _client
+        .post(
+          Uri.parse(AppConstants.chatAskEndpoint),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(body),
+        )
+        .timeout(const Duration(seconds: 60));
+    _check(resp);
+    return jsonDecode(resp.body) as Map<String, dynamic>;
+  }
 }

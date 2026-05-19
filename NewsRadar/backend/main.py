@@ -10,6 +10,7 @@ import os
 from api.articles import router as articles_router
 from api.analysis import router as analysis_router
 from api.health import router as health_router
+from api.chat import router as chat_router
 from core.config import settings
 
 app = FastAPI(
@@ -33,6 +34,7 @@ app.add_middleware(
 app.include_router(health_router)
 app.include_router(articles_router)
 app.include_router(analysis_router)
+app.include_router(chat_router)
 
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend_web")
 if os.path.exists(frontend_path):
