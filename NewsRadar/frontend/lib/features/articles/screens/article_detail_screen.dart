@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:url_launcher/url_launcher.dart';
+import '../../../shared/utils/url_launcher_helper.dart';
 import '../../../shared/models/models.dart';
 import '../../../shared/models/user.dart';
 import '../../../core/theme.dart';
@@ -258,24 +258,8 @@ class _ReadOriginalButton extends StatelessWidget {
   final String url, source;
   const _ReadOriginalButton({required this.url, required this.source});
   @override
-  Widget build(BuildContext context) => SizedBox(
-    width: double.infinity,
-    child: OutlinedButton.icon(
-      onPressed: () async {
-        final uri = Uri.parse(url);
-        if (await canLaunchUrl(uri)) launchUrl(uri, mode: LaunchMode.externalApplication);
-      },
-      icon: const Icon(Icons.open_in_new_rounded, size: 16),
-      label: Text('Read original article on $source ↗',
-        style: GoogleFonts.inter(fontSize: 13, fontWeight: FontWeight.w600)),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.accentDeep,
-        side: const BorderSide(color: AppColors.accentDeep, width: 1.5),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      ),
-    ),
-  );
+  Widget build(BuildContext context) =>
+      OpenArticleButton(url: url, sourceName: source);
 }
 
 // ─── Verdict row ──────────────────────────────────────────────────────────────

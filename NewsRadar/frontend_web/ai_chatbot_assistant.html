@@ -1,312 +1,846 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html class="light" lang="en">
+<head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>NewsRadar Assistant</title>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta name="description" content="NewsRadar Intelligence Assistant - AI-powered news chatbot with voice support and Roman Urdu understanding."/>
+<meta name="theme-color" content="#004e9f"/>
+<title>NewsRadar AI Assistant</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "secondary-fixed-dim": "#ffb3b0",
-                        "tertiary-fixed-dim": "#78dc77",
-                        "on-primary": "#ffffff",
-                        "secondary-fixed": "#ffdad8",
-                        "on-primary-fixed": "#001b3e",
-                        "on-tertiary": "#ffffff",
-                        "on-secondary-fixed": "#410006",
-                        "outline": "#727784",
-                        "tertiary-container": "#047921",
-                        "on-surface-variant": "#414753",
-                        "on-primary-container": "#dfe8ff",
-                        "surface-tint": "#005cba",
-                        "on-surface": "#1b1c1c",
-                        "surface-bright": "#fcf9f8",
-                        "on-error-container": "#93000a",
-                        "primary": "#004e9f",
-                        "inverse-primary": "#aac7ff",
-                        "on-background": "#1b1c1c",
-                        "surface-container-lowest": "#ffffff",
-                        "error": "#ba1a1a",
-                        "on-secondary-container": "#6d0010",
-                        "surface-container-highest": "#e5e2e1",
-                        "primary-fixed": "#d7e3ff",
-                        "tertiary": "#005e17",
-                        "surface-container-high": "#eae7e7",
-                        "surface": "#fcf9f8",
-                        "inverse-surface": "#303030",
-                        "inverse-on-surface": "#f3f0ef",
-                        "surface-container": "#f0eded",
-                        "primary-fixed-dim": "#aac7ff",
-                        "on-tertiary-fixed-variant": "#005313",
-                        "on-primary-fixed-variant": "#00458e",
-                        "on-secondary-fixed-variant": "#8c1520",
-                        "secondary-container": "#ff6b6b",
-                        "surface-container-low": "#f6f3f2",
-                        "primary-container": "#0066cc",
-                        "on-error": "#ffffff",
-                        "secondary": "#ae2f34",
-                        "error-container": "#ffdad6",
-                        "tertiary-fixed": "#94f990",
-                        "on-tertiary-container": "#9aff96",
-                        "outline-variant": "#c1c6d5",
-                        "surface-variant": "#e5e2e1",
-                        "on-tertiary-fixed": "#002204",
-                        "surface-dim": "#dcd9d9",
-                        "on-secondary": "#ffffff",
-                        "background": "#fcf9f8"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "sm": "8px",
-                        "md": "16px",
-                        "gutter": "24px",
-                        "lg": "24px",
-                        "xs": "4px",
-                        "container-max": "1280px",
-                        "base": "8px",
-                        "xl": "40px",
-                        "margin-mobile": "16px"
-                    },
-                    "fontFamily": {
-                        "headline-md": ["Inter"],
-                        "button": ["Inter"],
-                        "headline-xl": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "label-sm": ["JetBrains Mono"],
-                        "headline-xl-mobile": ["Inter"],
-                        "body-md": ["Inter"],
-                        "body-lg": ["Inter"]
-                    },
-                    "fontSize": {
-                        "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "button": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
-                        "headline-xl": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
-                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
-                        "headline-xl-mobile": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
-                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
-                    }
-                },
-            },
-        }
-    </script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .chat-container::-webkit-scrollbar {
-            width: 4px;
-        }
-        .chat-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .chat-container::-webkit-scrollbar-thumb {
-            background: #e5e2e1;
-            border-radius: 10px;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
-<!-- TopAppBar -->
-<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline shadow-sm w-full sticky top-0 z-50">
-<div class="flex items-center justify-between px-md py-sm max-w-container-max mx-auto h-16">
-<div class="flex items-center gap-md">
-<span class="material-symbols-outlined text-primary dark:text-primary-fixed text-[28px]" data-icon="radar">radar</span>
-<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NewsRadar Assistant</h1>
-</div>
-<div class="flex items-center gap-sm">
-<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
-</button>
-<button class="p-2 rounded-full hover:bg-surface-container-high transition-colors active:scale-95 duration-200">
-<span class="material-symbols-outlined text-on-surface-variant" data-icon="close">close</span>
-</button>
-</div>
-</div>
-</header>
-<!-- Main Content / Chat Area -->
-<main class="flex-grow flex flex-col max-w-4xl mx-auto w-full px-margin-mobile md:px-gutter py-md relative overflow-hidden">
-<!-- Chat History -->
-<div class="chat-container flex-grow overflow-y-auto space-y-lg pb-xl scroll-smooth" id="chatHistory">
-<!-- Bot Message -->
-<div class="flex gap-md items-end animate-fade-in">
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-on-primary text-sm" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
-</div>
-<div class="max-w-[85%] bg-surface-container-high rounded-xl rounded-bl-none p-md shadow-sm">
-<p class="font-body-md text-on-surface">Hello! I'm your NewsRadar Intelligence partner. I can help you synthesize today's headlines, verify claims, or deep-dive into specific industry pipelines. What are we investigating today?</p>
-<span class="block mt-xs font-label-sm text-label-sm text-on-surface-variant">09:41 AM</span>
-</div>
-</div>
-<!-- User Message -->
-<div class="flex gap-md items-end justify-end animate-fade-in">
-<div class="max-w-[85%] bg-primary text-on-primary rounded-xl rounded-br-none p-md shadow-sm">
-<p class="font-body-md">What's the latest update on the semiconductor supply chain in Southeast Asia?</p>
-<span class="block mt-xs font-label-sm text-label-sm text-on-primary/70 text-right">09:42 AM</span>
-</div>
-</div>
-<!-- Bot Message with Data Insights -->
-<div class="flex gap-md items-end animate-fade-in" style="animation-delay: 0.1s;">
-<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
-<span class="material-symbols-outlined text-on-primary text-sm" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
-</div>
-<div class="max-w-[85%] bg-surface-container-high rounded-xl rounded-bl-none p-md shadow-sm">
-<p class="font-body-md text-on-surface mb-md">I've tracked a 12% increase in regional investment activity over the last 48 hours. Key developments include:</p>
-<div class="space-y-sm">
-<div class="bg-surface-container-low border-l-4 border-primary p-sm rounded">
-<h4 class="font-label-sm text-label-sm text-primary uppercase">Pipeline Stage ID: SC-402</h4>
-<p class="text-sm font-medium">New fabrication facility announced in Penang, Malaysia.</p>
-</div>
-<div class="bg-surface-container-low border-l-4 border-tertiary p-sm rounded">
-<h4 class="font-label-sm text-label-sm text-tertiary uppercase">Fact Check: Verified</h4>
-<p class="text-sm font-medium">Vietnam trade ministry confirms 3 new export corridors.</p>
-</div>
-</div>
-<span class="block mt-xs font-label-sm text-label-sm text-on-surface-variant">09:42 AM</span>
-</div>
-</div>
-</div>
-<!-- Sticky Interaction Area -->
-<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background/95 to-transparent pt-lg pb-md px-margin-mobile">
-<div class="max-w-4xl mx-auto space-y-md">
-<!-- Quick Actions Chips -->
-<div class="flex items-center gap-sm overflow-x-auto no-scrollbar pb-sm">
-<button class="shrink-0 px-md py-sm bg-surface-container-highest hover:bg-primary-container/20 border border-outline-variant rounded-full text-on-surface-variant font-button text-button transition-all flex items-center gap-sm active:scale-95">
-<span class="material-symbols-outlined text-[18px]" data-icon="summarize">summarize</span>
-                        Summarize latest news
-                    </button>
-<button class="shrink-0 px-md py-sm bg-surface-container-highest hover:bg-primary-container/20 border border-outline-variant rounded-full text-on-surface-variant font-button text-button transition-all flex items-center gap-sm active:scale-95">
-<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
-                        Explain this article
-                    </button>
-<button class="shrink-0 px-md py-sm bg-surface-container-highest hover:bg-primary-container/20 border border-outline-variant rounded-full text-on-surface-variant font-button text-button transition-all flex items-center gap-sm active:scale-95">
-<span class="material-symbols-outlined text-[18px]" data-icon="verified_user">verified_user</span>
-                        Fact-check this claim
-                    </button>
-</div>
-<!-- Input Field -->
-<div class="flex items-end gap-sm bg-surface-container-lowest border border-outline-variant focus-within:border-primary focus-within:ring-1 focus-within:ring-primary rounded-xl p-xs shadow-md transition-all">
-<button class="p-md text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined" data-icon="mic">mic</span>
-</button>
-<textarea class="flex-grow bg-transparent border-none focus:ring-0 py-md px-sm resize-none font-body-md text-on-surface placeholder:text-outline" oninput="this.style.height = '';this.style.height = this.scrollHeight + 'px'" placeholder="Ask NewsRadar Intelligence..." rows="1"></textarea>
-<button class="m-xs p-md bg-primary text-on-primary rounded-lg hover:brightness-110 active:scale-95 transition-all flex items-center justify-center">
-<span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span>
-</button>
-</div>
-<!-- Footer disclaimer -->
-<p class="text-center font-label-sm text-label-sm text-outline opacity-70">
-                    NewsRadar AI may occasionally provide inaccurate data. Verify critical information.
-                </p>
-</div>
-</div>
-</main>
-<!-- BottomNavBar -->
-<nav class="fixed bottom-0 w-full z-50 md:hidden border-t border-outline-variant dark:border-outline">
-<div class="flex justify-around items-center h-16 px-margin-mobile bg-surface/95 backdrop-blur-md">
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
-<span class="material-symbols-outlined" data-icon="home">home</span>
-<span class="font-label-sm text-[10px]">Home</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
-<span class="material-symbols-outlined" data-icon="explore">explore</span>
-<span class="font-label-sm text-[10px]">Explore</span>
-</button>
-<button class="flex flex-col items-center justify-center text-primary dark:text-primary-fixed-dim bg-primary-container/10 rounded-xl px-3 py-1 active:scale-90 duration-150">
-<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
-<span class="font-label-sm text-[10px]">Pipeline</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
-<span class="material-symbols-outlined" data-icon="bookmark">bookmark</span>
-<span class="font-label-sm text-[10px]">Saved</span>
-</button>
-<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline hover:text-primary transition-all active:scale-90 duration-150">
-<span class="material-symbols-outlined" data-icon="person">person</span>
-<span class="font-label-sm text-[10px]">Profile</span>
-</button>
-</div>
-</nav>
+  :root {
+    --primary: #004e9f;
+    --primary-light: #0066cc;
+    --primary-glow: rgba(0,78,159,0.2);
+    --secondary: #ae2f34;
+    --bg: #f5f7fa;
+    --surface: #ffffff;
+    --header-h: 64px;
+    /* iOS safe area support */
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-top: env(safe-area-inset-top, 0px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { height: 100%; -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    height: 100%;
+    /* Fix iOS bounce scroll */
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* ── Layout shell ── */
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-top: var(--safe-top);
+  }
+
+  /* ── Header ── */
+  #topHeader {
+    flex-shrink: 0;
+    height: var(--header-h);
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(193,198,213,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    position: relative;
+    z-index: 10;
+  }
+
+  /* ── Chat area (scrollable middle) ── */
+  #chatScroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 20px 16px;
+    padding-bottom: 12px;
+  }
+  #chatScroll::-webkit-scrollbar { width: 4px; }
+  #chatScroll::-webkit-scrollbar-thumb { background: #c1c6d5; border-radius: 4px; }
+
+  /* ── Input bar (pinned to bottom) ── */
+  #inputArea {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    padding-bottom: calc(10px + var(--safe-bottom));
+    background: linear-gradient(to top, var(--bg) 80%, transparent);
+    border-top: 1px solid rgba(193,198,213,0.3);
+  }
+
+  /* ── Chips row ── */
+  #chipsRow {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  #chipsRow::-webkit-scrollbar { display: none; }
+
+  /* ── Input wrap ── */
+  #inputWrap {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    background: white;
+    border: 1.5px solid rgba(193,198,213,0.7);
+    border-radius: 20px;
+    padding: 6px 6px 6px 8px;
+    box-shadow: 0 4px 20px -6px rgba(0,78,159,0.12);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  #inputWrap:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow), 0 4px 20px -6px rgba(0,78,159,0.2);
+  }
+
+  #chatInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    color: #1b1c1c;
+    resize: none;
+    max-height: 120px;
+    padding: 8px 4px;
+    line-height: 1.5;
+  }
+  #chatInput::placeholder { color: #9ca3af; }
+
+  /* ── Buttons ── */
+  .icon-btn {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+    color: #727784;
+    font-family: 'Material Symbols Outlined';
+    font-size: 22px;
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .icon-btn:hover { background: rgba(0,78,159,0.08); color: var(--primary); }
+  .icon-btn:active { transform: scale(0.9); }
+
+  #sendBtn {
+    background: linear-gradient(135deg, #0066cc, #004e9f);
+    color: white;
+    border-radius: 14px;
+    width: 42px; height: 42px;
+    box-shadow: 0 4px 12px -2px rgba(0,78,159,0.4);
+  }
+  #sendBtn:hover { filter: brightness(1.1); background: linear-gradient(135deg, #0066cc, #004e9f); }
+
+  /* ── Mic active ── */
+  @keyframes micPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(174,47,52,0.5); }
+    50% { box-shadow: 0 0 0 10px rgba(174,47,52,0); }
+  }
+  .mic-active {
+    background: var(--secondary) !important;
+    color: white !important;
+    animation: micPulse 1s ease-out infinite;
+  }
+
+  /* ── Chip ── */
+  .chip {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 5px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(193,198,213,0.6);
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(8px);
+    font-size: 12px; font-weight: 600;
+    color: #414753;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+    font-family: 'Inter', sans-serif;
+  }
+  .chip:hover { transform: translateY(-2px); background: white; border-color: var(--primary); color: var(--primary); }
+  .chip:active { transform: scale(0.95); }
+  .chip .material-symbols-outlined { font-size: 14px; font-variation-settings: 'FILL' 1; }
+
+  /* ── Welcome card ── */
+  #welcomeCard { text-align: center; padding: 24px 16px 16px; }
+
+  /* ── Bot animations ── */
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  @keyframes blink { 0%,88%,100% { transform: scaleY(1); } 93% { transform: scaleY(0.08); } }
+  @keyframes iris { 0%,100% { transform: translate(0,0); } 30% { transform: translate(2px,-1px); } 70% { transform: translate(-2px,1px); } }
+  @keyframes pulseRing { 0% { transform: scale(0.9); opacity: 0.5; } 70% { transform: scale(1.2); opacity: 0; } 100% { transform: scale(1.2); opacity: 0; } }
+  @keyframes speakBar { 0%,100% { height: 3px; } 50% { height: 16px; } }
+
+  .bot-float { animation: float 3s ease-in-out infinite; }
+  .bot-eye { animation: blink 4s ease-in-out infinite; transform-origin: center; }
+  .bot-iris { animation: iris 5s ease-in-out infinite; }
+  .pulse-ring { animation: pulseRing 2s ease-out infinite; }
+  .speak-bar { animation: speakBar 0.5s ease-in-out infinite alternate; width: 3px; border-radius: 4px; background: var(--primary); }
+  .speak-bar:nth-child(2) { animation-delay: 0.1s; }
+  .speak-bar:nth-child(3) { animation-delay: 0.2s; }
+  .speak-bar:nth-child(4) { animation-delay: 0.15s; }
+  .speak-bar:nth-child(5) { animation-delay: 0.05s; }
+
+  /* ── Listen wave ── */
+  @keyframes listenWave { 0%,100% { transform: scaleY(0.3); } 50% { transform: scaleY(1); } }
+  .listen-bar { width: 3px; border-radius: 4px; background: var(--secondary); animation: listenWave 0.8s ease-in-out infinite; }
+  .listen-bar:nth-child(2) { animation-delay: 0.1s; }
+  .listen-bar:nth-child(3) { animation-delay: 0.2s; }
+  .listen-bar:nth-child(4) { animation-delay: 0.15s; }
+  .listen-bar:nth-child(5) { animation-delay: 0.05s; }
+
+  /* ── Messages ── */
+  @keyframes msgIn { from { opacity:0; transform: translateY(10px) scale(0.97); } to { opacity:1; transform: translateY(0) scale(1); } }
+  .msg-in { animation: msgIn 0.28s cubic-bezier(0.34,1.4,0.64,1) forwards; }
+
+  .bot-bubble {
+    background: linear-gradient(145deg,#fff 0%,#f3f6fc 100%);
+    border: 1px solid rgba(193,198,213,0.4);
+    box-shadow: 0 3px 16px -4px rgba(0,78,159,0.08);
+  }
+  .user-bubble {
+    background: linear-gradient(135deg,#0066cc,#004e9f);
+    box-shadow: 0 4px 16px -4px rgba(0,82,204,0.35);
+    color: white;
+  }
+
+  /* ── Typing dots ── */
+  @keyframes typeDot { 0%,60%,100% { transform:translateY(0); opacity:0.3; } 30% { transform:translateY(-5px); opacity:1; } }
+  .type-dot { width:7px; height:7px; border-radius:50%; background: #9ca3af; animation: typeDot 1.2s ease-in-out infinite; display:inline-block; }
+  .type-dot:nth-child(2) { animation-delay: 0.15s; }
+  .type-dot:nth-child(3) { animation-delay: 0.3s; }
+
+  /* ── Bot message content formatting ── */
+  .bot-content { font-size:14px; line-height:1.6; color:#1b1c1c; }
+  .bot-content p { margin-bottom: 4px; }
+  .bot-content strong { color: var(--primary); font-weight: 600; }
+  .bot-content ul { list-style: disc; padding-left: 1.3rem; margin: 4px 0; }
+  .bot-content li { margin-bottom: 2px; }
+  .bot-content code { background: rgba(0,78,159,0.08); padding: 1px 5px; border-radius: 4px; font-family: 'JetBrains Mono',monospace; font-size:0.85em; }
+  .bot-content em { font-style: italic; }
+
+  /* ── Toast ── */
+  @keyframes toastIn { from { opacity:0; transform:translateX(-50%) translateY(10px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
+  .toast { animation: toastIn 0.25s ease forwards; position:fixed; top:76px; left:50%; transform:translateX(-50%); z-index:100; padding:10px 18px; border-radius:12px; font-size:13px; font-weight:600; color:white; white-space:nowrap; box-shadow:0 8px 24px rgba(0,0,0,0.15); }
+
+  /* ── Status dot ── */
+  @keyframes statusPulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+  .status-online { animation: statusPulse 2.5s ease-in-out infinite; }
+
+  /* ── Badge ── */
+  .badge { display:inline-flex; align-items:center; gap:4px; padding:4px 10px; border-radius:20px; font-size:11px; font-weight:600; background:rgba(0,78,159,0.07); color:var(--primary); border:1px solid rgba(0,78,159,0.15); }
+  .badge .material-symbols-outlined { font-size:13px; font-variation-settings:'FILL' 1; }
+
+  /* ── Connection banner ── */
+  #connectionBanner {
+    background: #fff3cd; border-bottom: 1px solid #ffc107;
+    padding: 8px 16px; font-size: 12px; font-weight: 600; color: #856404;
+    display: none; align-items: center; gap: 6px; flex-shrink: 0;
+  }
+
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; font-style: normal; }
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ── Header ── -->
+  <header id="topHeader">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <!-- Animated bot (mini) -->
+      <div style="position:relative;width:40px;height:40px;flex-shrink:0;">
+        <svg class="bot-float" viewBox="0 0 40 40" width="40" height="40" fill="none">
+          <rect x="5" y="11" width="30" height="22" rx="9" fill="var(--primary)"/>
+          <rect x="13" y="5" width="14" height="9" rx="3.5" fill="var(--primary-light)"/>
+          <circle cx="20" cy="5" r="3.5" fill="#aac7ff"/>
+          <ellipse cx="14.5" cy="20" rx="4.5" ry="4.5" fill="white" class="bot-eye"/>
+          <ellipse cx="25.5" cy="20" rx="4.5" ry="4.5" fill="white" class="bot-eye" style="animation-delay:0.5s"/>
+          <circle cx="15.5" cy="20" r="2.8" fill="var(--primary)" class="bot-iris"/>
+          <circle cx="26.5" cy="20" r="2.8" fill="var(--primary)" class="bot-iris" style="animation-delay:0.7s"/>
+          <circle cx="16.2" cy="18.8" r="1" fill="white"/>
+          <circle cx="27.2" cy="18.8" r="1" fill="white"/>
+          <rect x="14" y="28" width="12" height="2.5" rx="1.25" fill="rgba(255,255,255,0.4)"/>
+          <circle cx="5" cy="21" r="3" fill="#0052b3"/>
+          <circle cx="35" cy="21" r="3" fill="#0052b3"/>
+        </svg>
+        <div style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:#4ade80;border:2px solid white;border-radius:50%;"></div>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--primary);line-height:1.2;">NewsRadar AI</div>
+        <div style="display:flex;align-items:center;gap:5px;margin-top:1px;">
+          <div class="status-online" style="width:7px;height:7px;background:#4ade80;border-radius:50%;flex-shrink:0;"></div>
+          <span id="statusText" style="font-size:11px;color:#727784;font-weight:500;">Online · Groq AI · Roman Urdu ✓</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:2px;">
+      <!-- Voice output toggle -->
+      <button id="voiceToggleBtn" onclick="toggleVoiceOutput()" class="icon-btn" title="Toggle voice output" style="font-variation-settings:'FILL' 1">
+        <span class="material-symbols-outlined" id="voiceIcon" style="font-variation-settings:'FILL' 1">volume_up</span>
+      </button>
+      <!-- Clear -->
+      <button onclick="clearChat()" class="icon-btn" title="Clear chat">
+        <span class="material-symbols-outlined">delete_sweep</span>
+      </button>
+      <!-- Home -->
+      <a href="home_feed.html" class="icon-btn" title="Home" style="text-decoration:none;">
+        <span class="material-symbols-outlined">home</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Connection warning banner ── -->
+  <div id="connectionBanner">
+    <span class="material-symbols-outlined" style="font-size:16px;">wifi_off</span>
+    <span>Backend not reachable — using fallback mode. Check your connection.</span>
+  </div>
+
+  <!-- ── Chat Scroll Area ── -->
+  <div id="chatScroll">
+
+    <!-- Welcome card -->
+    <div id="welcomeCard">
+      <!-- Bot avatar -->
+      <div style="position:relative;width:88px;height:88px;margin:0 auto 12px;">
+        <div class="pulse-ring" style="position:absolute;inset:-10px;border-radius:50%;border:2px solid var(--primary);"></div>
+        <svg class="bot-float" viewBox="0 0 88 88" width="88" height="88" fill="none">
+          <defs>
+            <linearGradient id="bg1" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0066cc"/>
+              <stop offset="100%" stop-color="#004e9f"/>
+            </linearGradient>
+            <linearGradient id="face1" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a7de8"/>
+              <stop offset="100%" stop-color="#003d8c"/>
+            </linearGradient>
+            <filter id="glow1">
+              <feGaussianBlur stdDeviation="2.5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <rect x="10" y="24" width="68" height="52" rx="18" fill="url(#bg1)"/>
+          <rect x="33" y="6" width="22" height="21" rx="6" fill="#0066cc"/>
+          <circle cx="44" cy="5.5" r="6" fill="#aac7ff" filter="url(#glow1)"/>
+          <rect x="18" y="32" width="52" height="34" rx="12" fill="url(#face1)"/>
+          <!-- Eyes -->
+          <ellipse cx="33" cy="47" rx="7" ry="7" fill="white" class="bot-eye"/>
+          <ellipse cx="55" cy="47" rx="7" ry="7" fill="white" class="bot-eye" style="animation-delay:0.4s"/>
+          <!-- Pupils -->
+          <circle cx="34.2" cy="47" r="4.2" fill="var(--primary)" class="bot-iris"/>
+          <circle cx="56.2" cy="47" r="4.2" fill="var(--primary)" class="bot-iris" style="animation-delay:0.7s"/>
+          <!-- Eye shine -->
+          <circle cx="35.5" cy="44.8" r="1.5" fill="white"/>
+          <circle cx="57.5" cy="44.8" r="1.5" fill="white"/>
+          <!-- Smile -->
+          <path d="M31 58 Q44 66 57 58" stroke="rgba(255,255,255,0.55)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+          <!-- Ears -->
+          <circle cx="10" cy="48" r="5" fill="#0052b3"/>
+          <circle cx="78" cy="48" r="5" fill="#0052b3"/>
+          <!-- Body details -->
+          <rect x="30" y="62" width="28" height="7" rx="3.5" fill="rgba(255,255,255,0.15)"/>
+          <circle cx="36" cy="65.5" r="2.5" fill="rgba(255,255,255,0.45)"/>
+          <circle cx="44" cy="65.5" r="2.5" fill="rgba(255,255,255,0.3)"/>
+          <circle cx="52" cy="65.5" r="2.5" fill="#78dc77"/>
+        </svg>
+      </div>
+
+      <!-- Speak bars (show when bot "speaking") -->
+      <div id="speakBars" style="display:none;justify-content:center;align-items:flex-end;gap:3px;height:20px;margin-bottom:8px;">
+        <div class="speak-bar" style="height:5px;"></div>
+        <div class="speak-bar" style="height:12px;"></div>
+        <div class="speak-bar" style="height:16px;"></div>
+        <div class="speak-bar" style="height:12px;"></div>
+        <div class="speak-bar" style="height:5px;"></div>
+      </div>
+
+      <h2 style="font-size:19px;font-weight:700;color:#1b1c1c;margin-bottom:6px;">NewsRadar Intelligence</h2>
+      <p style="font-size:13px;color:#727784;line-height:1.6;max-width:300px;margin:0 auto 14px;">
+        Aapka AI news partner! English ya Roman Urdu mein baat karo. Voice bhi kaam karta hai! 🎙️
+      </p>
+
+      <!-- Badges -->
+      <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">
+        <span class="badge"><span class="material-symbols-outlined">bolt</span>Groq AI (Fast)</span>
+        <span class="badge"><span class="material-symbols-outlined">mic</span>Voice Input</span>
+        <span class="badge"><span class="material-symbols-outlined">translate</span>Roman Urdu</span>
+        <span class="badge"><span class="material-symbols-outlined">newspaper</span>News Intel</span>
+      </div>
+    </div>
+
+    <!-- Greeting message -->
+    <div class="msg-in" style="display:flex;gap:10px;align-items:flex-end;margin-top:8px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:4px;">
+        <span class="material-symbols-outlined" style="color:white;font-size:16px;font-variation-settings:'FILL' 1">smart_toy</span>
+      </div>
+      <div style="max-width:85%;">
+        <div class="bot-bubble" style="border-radius:18px 18px 18px 4px;padding:12px 14px;">
+          <div class="bot-content">
+            <p>Assalam o Alaikum! 👋 Main hoon <strong>NewsRadar AI</strong> — powered by Groq (super fast!).</p>
+            <p style="margin-top:6px;">Kuch bhi poochho — news, general baat, jokes, facts — English ya Roman Urdu mein. 🇵🇰✨</p>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+            <span style="font-size:10px;color:#9ca3af;" id="greetTime"></span>
+            <button onclick="speakMessage(this)" data-text="Assalam o Alaikum! Main hoon NewsRadar AI. Kuch bhi poochho — news, general baat — English ya Roman Urdu mein." 
+              style="background:none;border:none;cursor:pointer;color:#9ca3af;padding:2px;font-family:'Material Symbols Outlined';font-size:15px;font-variation-settings:'FILL' 1" title="Listen">volume_up</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Typing indicator (hidden) -->
+    <div id="typingIndicator" style="display:none;flex;gap:10px;align-items:flex-end;margin-top:10px;">
+      <div style="width:28px;height:28px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span class="material-symbols-outlined" style="color:white;font-size:16px;font-variation-settings:'FILL' 1">smart_toy</span>
+      </div>
+      <div class="bot-bubble" style="border-radius:18px 18px 18px 4px;padding:12px 16px;display:flex;gap:5px;align-items:center;">
+        <div class="type-dot"></div>
+        <div class="type-dot"></div>
+        <div class="type-dot"></div>
+      </div>
+    </div>
+
+  </div><!-- end #chatScroll -->
+
+  <!-- ── Input Area ── -->
+  <div id="inputArea">
+
+    <!-- Chips -->
+    <div id="chipsRow">
+      <button class="chip" onclick="sendChip(this)" data-msg="Aaj ki top khabrain bata do">
+        <span class="material-symbols-outlined">newspaper</span>Top khabrain
+      </button>
+      <button class="chip" onclick="sendChip(this)" data-msg="Summarize the latest technology and AI news">
+        <span class="material-symbols-outlined">summarize</span>Tech news
+      </button>
+      <button class="chip" onclick="sendChip(this)" data-msg="Pakistan mein kya ho raha hai aaj kal?">
+        <span class="material-symbols-outlined">public</span>Pakistan
+      </button>
+      <button class="chip" onclick="sendChip(this)" data-msg="Fact check: AI ne sab jobs le li hain — sach hai ya jhooth?">
+        <span class="material-symbols-outlined">verified_user</span>Fact check
+      </button>
+      <button class="chip" onclick="sendChip(this)" data-msg="Stock market aur cryptocurrency ka kya haal hai?">
+        <span class="material-symbols-outlined">trending_up</span>Market
+      </button>
+      <button class="chip" onclick="sendChip(this)" data-msg="Ek mazedaar joke sunao!">
+        <span class="material-symbols-outlined">sentiment_very_satisfied</span>Joke
+      </button>
+      <button class="chip" onclick="sendChip(this)" data-msg="Koi interesting fun fact bata do!">
+        <span class="material-symbols-outlined">lightbulb</span>Fun fact
+      </button>
+    </div>
+
+    <!-- Voice listening bar -->
+    <div id="listeningBar" style="display:none;align-items:center;justify-content:center;gap:8px;padding:6px 0;">
+      <div style="display:flex;align-items:flex-end;gap:3px;height:22px;">
+        <div class="listen-bar" style="height:6px;"></div>
+        <div class="listen-bar" style="height:14px;"></div>
+        <div class="listen-bar" style="height:22px;"></div>
+        <div class="listen-bar" style="height:14px;"></div>
+        <div class="listen-bar" style="height:6px;"></div>
+      </div>
+      <span style="font-size:13px;font-weight:600;color:var(--secondary);">Sun raha hoon... 🎙️</span>
+      <div style="display:flex;align-items:flex-end;gap:3px;height:22px;">
+        <div class="listen-bar" style="height:8px;"></div>
+        <div class="listen-bar" style="height:16px;"></div>
+        <div class="listen-bar" style="height:20px;"></div>
+        <div class="listen-bar" style="height:12px;"></div>
+        <div class="listen-bar" style="height:5px;"></div>
+      </div>
+    </div>
+
+    <!-- Input wrap -->
+    <div id="inputWrap">
+      <button id="micBtn" onclick="toggleMic()" class="icon-btn" title="Voice input (English / Roman Urdu)">
+        <span id="micIcon" class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">mic</span>
+      </button>
+      <textarea id="chatInput"
+        placeholder="Kuch bhi poochho — news, baat cheet, ya koi sawaal... 💬"
+        rows="1"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button id="sendBtn" class="icon-btn" onclick="handleSend()" title="Send">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">send</span>
+      </button>
+    </div>
+
+    <p style="text-align:center;font-size:10px;color:#9ca3af;margin-top:6px;">NewsRadar AI may occasionally make mistakes. Verify critical info.</p>
+  </div>
+
+</div><!-- end #app -->
+
 <script>
-        // Simple micro-interaction for the chat input
-        const textarea = document.querySelector('textarea');
-        textarea.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                const text = textarea.value.trim();
-                if (text) {
-                    appendUserMessage(text);
-                    textarea.value = '';
-                    textarea.style.height = 'auto';
-                }
-            }
-        });
+// ═══════════════════════════════════════════════════════
+// CONFIG — Backend API endpoint
+// When deployed on Render, the backend serves frontend_web at /app/
+// So relative URLs work perfectly: /api/v1/chat/ask
+// ═══════════════════════════════════════════════════════
+const API_BASE = (() => {
+  // If served from the backend (Render), use relative URL
+  if (window.location.port === '' || window.location.port === '443' || window.location.port === '80') {
+    return '/api/v1/chat';
+  }
+  // Dev: frontend served directly without backend — try localhost backend
+  return 'http://localhost:8000/api/v1/chat';
+})();
 
-        function appendUserMessage(text) {
-            const chatHistory = document.getElementById('chatHistory');
-            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'flex gap-md items-end justify-end animate-fade-in';
-            messageDiv.innerHTML = `
-                <div class="max-w-[85%] bg-primary text-on-primary rounded-xl rounded-br-none p-md shadow-sm">
-                    <p class="font-body-md">${text}</p>
-                    <span class="block mt-xs font-label-sm text-label-sm text-on-primary/70 text-right">${now}</span>
-                </div>
-            `;
-            chatHistory.appendChild(messageDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
+const SESSION_ID = 'session_' + Math.random().toString(36).slice(2, 10);
 
-            // Trigger simulated bot response
-            setTimeout(() => {
-                appendBotMessage("Processing your inquiry through our real-time radar modules...");
-            }, 800);
-        }
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let voiceOutputEnabled = localStorage.getItem('nr_voice') !== 'false';
+let isListening = false;
+let recognition = null;
+let backendAvailable = null; // null = unknown, true/false after first test
 
-        function appendBotMessage(text) {
-            const chatHistory = document.getElementById('chatHistory');
-            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'flex gap-md items-end animate-fade-in';
-            messageDiv.innerHTML = `
-                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0">
-                    <span class="material-symbols-outlined text-on-primary text-sm" style="font-variation-settings: 'FILL' 1;" data-icon="smart_toy">smart_toy</span>
-                </div>
-                <div class="max-w-[85%] bg-surface-container-high rounded-xl rounded-bl-none p-md shadow-sm">
-                    <p class="font-body-md text-on-surface">${text}</p>
-                    <span class="block mt-xs font-label-sm text-label-sm text-on-surface-variant">${now}</span>
-                </div>
-            `;
-            chatHistory.appendChild(messageDiv);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('greetTime').textContent = fmtTime();
+  updateVoiceIcon();
+  initSpeechRecognition();
 
-        // Initialize scroll position
-        const chatHistory = document.getElementById('chatHistory');
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-    </script>
-</body></html>
+  // Enter key to send
+  document.getElementById('chatInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
+  });
+
+  // Test backend availability silently
+  testBackend();
+});
+
+async function testBackend() {
+  try {
+    const r = await fetch(API_BASE.replace('/chat', '/health'), { method:'GET', signal: AbortSignal.timeout(4000) });
+    backendAvailable = r.ok;
+  } catch {
+    backendAvailable = false;
+    document.getElementById('connectionBanner').style.display = 'flex';
+    document.getElementById('statusText').textContent = 'Fallback mode · Roman Urdu ✓';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SEND
+// ═══════════════════════════════════════════════════════
+async function handleSend() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  appendUserMessage(text);
+  input.value = '';
+  autoResize(input);
+  showTyping();
+
+  try {
+    const reply = await callBackend(text);
+    hideTyping();
+    appendBotMessage(reply);
+    if (voiceOutputEnabled) speakText(reply);
+  } catch(e) {
+    hideTyping();
+    const fallback = getFallback(text);
+    appendBotMessage(fallback + '\n\n_(Fallback mode: backend offline)_');
+    if (voiceOutputEnabled) speakText(fallback);
+  }
+}
+
+function sendChip(btn) {
+  document.getElementById('chatInput').value = btn.dataset.msg;
+  handleSend();
+}
+
+// ═══════════════════════════════════════════════════════
+// BACKEND API CALL
+// ═══════════════════════════════════════════════════════
+async function callBackend(message) {
+  const res = await fetch(`${API_BASE}/ask`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, session_id: SESSION_ID }),
+    signal: AbortSignal.timeout(20000)
+  });
+
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  backendAvailable = true;
+  document.getElementById('connectionBanner').style.display = 'none';
+  return data.reply || 'Jawab nahi mila. Phir koshish karo.';
+}
+
+// ═══════════════════════════════════════════════════════
+// FALLBACK (no backend)
+// ═══════════════════════════════════════════════════════
+function getFallback(text) {
+  const t = text.toLowerCase();
+  if (/salam|hello|hi\b|helo|assalam/.test(t)) return "Wa Alaikum Assalam! 👋 Kaafi acha lagta hai aapko milke! Abhi backend offline hai, lekin main yahan hoon. Kya jaanna chahte hain?";
+  if (/kya haal|how are|kaisa|kaise ho/.test(t)) return "Bilkul theek hoon yaar! 😄 Aap sunao — kya chal raha hai?";
+  if (/joke|mazak|funny|hansi/.test(t)) return "Haha! Editor ne journalist se kaha — 'Khabar short karo.' Journalist ne poori khabar delete kar di aur likha: 'Kuch nahi hua.' 😂";
+  if (/pakistan|lahore|karachi|islamabad/.test(t)) return "Pakistan 🇵🇰 ke baare mein pooch rahe hain! Backend se real-time updates milenge jab connection ho. Koi specific topic?";
+  if (/tech|ai|artificial|google|openai/.test(t)) return "Tech world mein bahut tezi hai! AI, LLMs, semiconductors — sab race mein hain. Backend online hone pe detail milegi! 🤖";
+  if (/market|stock|crypto|bitcoin|rupee/.test(t)) return "Financial markets volatile hain! 📈 Backend se real data milega. Abhi offline hoon unfortunately.";
+  if (/thank|shukriya|shukria/.test(t)) return "Aapka shukriya! 🙏 Khushi hui. Koi aur kaam?";
+  if (/bye|khuda hafiz|alvida/.test(t)) return "Khuda Hafiz! 👋 Jab bhi zarurat ho, main yahaan hoon!";
+  if (/fun fact|interesting|amazing/.test(t)) return "Fun fact: Octopuses have THREE hearts and BLUE blood! 🐙 Aur unke paas 9 brains hote hain (1 main + 8 tentacle mein)!";
+  return `"${text.slice(0,40)}..." — Bahut acha sawaal! Backend offline hai abhi. Network check karo aur refresh karo. 🔄`;
+}
+
+// ═══════════════════════════════════════════════════════
+// UI HELPERS
+// ═══════════════════════════════════════════════════════
+function appendUserMessage(text) {
+  const chat = document.getElementById('chatScroll');
+  const typer = document.getElementById('typingIndicator');
+  const now = fmtTime();
+
+  const wrap = document.createElement('div');
+  wrap.className = 'msg-in';
+  wrap.style.cssText = 'display:flex;justify-content:flex-end;margin-top:10px;';
+  wrap.innerHTML = `
+    <div style="max-width:85%;">
+      <div class="user-bubble" style="border-radius:18px 18px 4px 18px;padding:12px 14px;">
+        <p style="font-size:14px;line-height:1.6;">${escHtml(text)}</p>
+        <span style="font-size:10px;color:rgba(255,255,255,0.6);display:block;margin-top:4px;text-align:right;">${now}</span>
+      </div>
+    </div>`;
+  chat.insertBefore(wrap, typer);
+  scrollBottom();
+}
+
+function appendBotMessage(text) {
+  const chat = document.getElementById('chatScroll');
+  const typer = document.getElementById('typingIndicator');
+  const now = fmtTime();
+  const fmt = formatMd(text);
+  const escapedText = text.replace(/"/g,'&quot;');
+
+  const wrap = document.createElement('div');
+  wrap.className = 'msg-in';
+  wrap.style.cssText = 'display:flex;gap:10px;align-items:flex-end;margin-top:10px;';
+  wrap.innerHTML = `
+    <div style="width:28px;height:28px;border-radius:50%;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:4px;">
+      <span class="material-symbols-outlined" style="color:white;font-size:16px;font-variation-settings:'FILL' 1">smart_toy</span>
+    </div>
+    <div style="max-width:85%;">
+      <div class="bot-bubble" style="border-radius:18px 18px 18px 4px;padding:12px 14px;">
+        <div class="bot-content">${fmt}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:10px;color:#9ca3af;">${now}</span>
+          <button onclick="speakMessage(this)" data-text="${escapedText}"
+            style="background:none;border:none;cursor:pointer;color:#9ca3af;padding:2px;font-family:'Material Symbols Outlined';font-size:15px;font-variation-settings:'FILL' 1" title="Listen">volume_up</button>
+        </div>
+      </div>
+    </div>`;
+  chat.insertBefore(wrap, typer);
+  scrollBottom();
+  showSpeakBars();
+}
+
+function formatMd(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g,'<em>$1</em>')
+    .replace(/`(.*?)`/g,'<code>$1</code>')
+    .replace(/^### (.+)$/gm,'<p style="font-weight:700;color:var(--primary);margin-top:6px;">$1</p>')
+    .replace(/^## (.+)$/gm,'<p style="font-weight:700;color:var(--primary);font-size:15px;margin-top:6px;">$1</p>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>[\s\S]*?<\/li>)+/g, m => `<ul>${m}</ul>`)
+    .replace(/\n\n/g,'</p><p style="margin-top:6px;">')
+    .replace(/\n/g,'<br/>');
+}
+
+function showTyping() {
+  const t = document.getElementById('typingIndicator');
+  t.style.display = 'flex';
+  document.getElementById('statusText').textContent = 'Soch raha hoon... 🤔';
+  scrollBottom();
+}
+
+function hideTyping() {
+  document.getElementById('typingIndicator').style.display = 'none';
+  document.getElementById('statusText').textContent = 'Online · Groq AI · Roman Urdu ✓';
+}
+
+function showSpeakBars() {
+  const b = document.getElementById('speakBars');
+  b.style.display = 'flex';
+  setTimeout(() => { b.style.display = 'none'; }, 2500);
+}
+
+function clearChat() {
+  const chat = document.getElementById('chatScroll');
+  // Remove all children except welcome card, greeting, and typing indicator
+  const kids = Array.from(chat.children);
+  kids.forEach((k, i) => {
+    if (k.id !== 'welcomeCard' && k.id !== 'typingIndicator') {
+      // Keep first message (greeting), remove rest user-added
+      if (i > 1) k.remove();
+    }
+  });
+  showToast('Chat clear! 🧹');
+}
+
+function scrollBottom() {
+  const chat = document.getElementById('chatScroll');
+  requestAnimationFrame(() => { chat.scrollTop = chat.scrollHeight; });
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+function fmtTime() { return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+
+function escHtml(t) {
+  const d = document.createElement('div');
+  d.textContent = t;
+  return d.innerHTML;
+}
+
+// ═══════════════════════════════════════════════════════
+// VOICE INPUT
+// ═══════════════════════════════════════════════════════
+function initSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    document.getElementById('micBtn').style.opacity = '0.35';
+    document.getElementById('micBtn').title = 'Voice not supported. Use Chrome!';
+    return;
+  }
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US'; // Handles Roman Urdu well
+
+  recognition.onstart = () => {
+    isListening = true;
+    document.getElementById('micBtn').classList.add('mic-active');
+    document.getElementById('micIcon').textContent = 'mic_off';
+    document.getElementById('listeningBar').style.display = 'flex';
+    document.getElementById('statusText').textContent = 'Sun raha hoon... 🎙️';
+  };
+
+  recognition.onresult = e => {
+    let t = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) t += e.results[i][0].transcript;
+    const inp = document.getElementById('chatInput');
+    inp.value = t;
+    autoResize(inp);
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    document.getElementById('micBtn').classList.remove('mic-active');
+    document.getElementById('micIcon').textContent = 'mic';
+    document.getElementById('listeningBar').style.display = 'none';
+    document.getElementById('statusText').textContent = 'Online · Groq AI · Roman Urdu ✓';
+    const v = document.getElementById('chatInput').value.trim();
+    if (v) handleSend();
+  };
+
+  recognition.onerror = e => {
+    isListening = false;
+    document.getElementById('micBtn').classList.remove('mic-active');
+    document.getElementById('micIcon').textContent = 'mic';
+    document.getElementById('listeningBar').style.display = 'none';
+    document.getElementById('statusText').textContent = 'Online · Groq AI · Roman Urdu ✓';
+    if (e.error !== 'no-speech') showToast('Mic error: ' + e.error);
+  };
+}
+
+function toggleMic() {
+  if (!recognition) { showToast('Chrome mein use karo voice ke liye! 🎙️'); return; }
+  if (isListening) { recognition.stop(); }
+  else {
+    try { recognition.start(); }
+    catch(e) { showToast('Mic start nahi hua. Retry karo.'); }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// VOICE OUTPUT
+// ═══════════════════════════════════════════════════════
+function toggleVoiceOutput() {
+  voiceOutputEnabled = !voiceOutputEnabled;
+  localStorage.setItem('nr_voice', voiceOutputEnabled);
+  updateVoiceIcon();
+  if (!voiceOutputEnabled) window.speechSynthesis.cancel();
+  showToast(voiceOutputEnabled ? '🔊 Voice output ON' : '🔇 Voice output OFF');
+}
+
+function updateVoiceIcon() {
+  const icon = document.getElementById('voiceIcon');
+  const btn = document.getElementById('voiceToggleBtn');
+  icon.textContent = voiceOutputEnabled ? 'volume_up' : 'volume_off';
+  btn.style.color = voiceOutputEnabled ? 'var(--primary)' : '';
+}
+
+function speakText(rawText) {
+  if (!voiceOutputEnabled || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const clean = rawText
+    .replace(/\*\*(.*?)\*\*/g,'$1').replace(/\*(.*?)\*/g,'$1')
+    .replace(/`(.*?)`/g,'$1').replace(/#+ /g,'').replace(/\n/g,' ')
+    .replace(/_\(.*?\)_/g,'').substring(0, 400);
+
+  const utt = new SpeechSynthesisUtterance(clean);
+  utt.rate = 0.95; utt.pitch = 1.0; utt.volume = 0.9;
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(v => v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Neural'))
+         || voices.find(v => v.lang.startsWith('en')) || voices[0];
+  if (v) utt.voice = v;
+  window.speechSynthesis.speak(utt);
+}
+
+function speakMessage(btn) { speakText(btn.dataset.text); }
+
+// ═══════════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════════
+function showToast(msg) {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.style.background = 'var(--primary)';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transition='opacity 0.3s'; setTimeout(()=>t.remove(),300); }, 2600);
+}
+
+// Fix iOS keyboard resize issue
+window.visualViewport?.addEventListener('resize', () => {
+  document.getElementById('chatScroll').scrollTop = document.getElementById('chatScroll').scrollHeight;
+});
+</script>
+</body>
+</html>
